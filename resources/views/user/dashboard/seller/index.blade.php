@@ -3,13 +3,13 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h1 class="page-header-title">All Customers</h1>
+                <h1 class="page-header-title">All Sellers</h1>
             </div>
             <!-- End Col -->
 
             <div class="col-auto">
-                <a class="btn btn-primary" href="{{ route('user.customer.create') }}">
-                    <i class="bi-person-plus-fill me-1"></i> Add Customer
+                <a class="btn btn-primary" href="{{ route('user.seller.create') }}">
+                    <i class="bi-person-plus-fill me-1"></i> Add Seller
                 </a>
             </div>
             <!-- End Col -->
@@ -22,7 +22,7 @@
                 <div class="card-header">
                     <div class="row justify-content-between align-items-center flex-grow-1">
                         <div class="col-md">
-                            <h4 class="card-header-title text-start">All Customers</h4>
+                            <h4 class="card-header-title text-start">All Sellers</h4>
                         </div>
 
                         <div class="col-auto">
@@ -129,7 +129,7 @@
                         </thead>
 
                         <tbody>
-                            @foreach ($customers as $customer)
+                            @foreach ($sellers as $customer)
                                 <tr>
                                     <td>
                                         <div class="ms-3">

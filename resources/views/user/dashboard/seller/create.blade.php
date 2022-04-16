@@ -3,13 +3,13 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h1 class="page-header-title">Add new Customers</h1>
+                <h1 class="page-header-title">Add new Seller</h1>
             </div>
             <!-- End Col -->
 
             <div class="col-auto">
                 <a class="btn btn-primary" href="{{ route('user.customer.index') }}">
-                    <i class="bi-person-fill me-1"></i> All Customer
+                    <i class="bi-person-fill me-1"></i> All Sellers
                 </a>
             </div>
             <!-- End Col -->
@@ -20,7 +20,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('user.customer.store') }}" method="POST">
+                    <form action="{{ route('user.seller.store') }}" method="POST">
                         @csrf
                         <div class="form-group text-start mb-2">
                             <label for="name" class="mb-2">Name</label>
@@ -48,7 +48,7 @@
                         </div>
                         <hr>
                         <div class="form-group text-end mb-2">
-                            <input type="submit" class="btn btn-primary" value="Add new Customer">
+                            <input type="submit" class="btn btn-primary" value="Add new Seller">
                         </div>
                     </form>
                 </div>

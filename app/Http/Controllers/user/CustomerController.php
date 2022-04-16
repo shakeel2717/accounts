@@ -41,6 +41,8 @@ class CustomerController extends Controller
             'name' => 'required|max:255',
             'business_name' => 'nullable|max:255',
             'address' => 'nullable|max:255',
+            'email' => 'nullable|max:255',
+            'phone' => 'nullable|max:255',
         ]);
 
         $customer = new Customer();
@@ -48,6 +50,8 @@ class CustomerController extends Controller
         $customer->name = $validatedData['name'];
         $customer->business_name = $validatedData['business_name'];
         $customer->address = $validatedData['address'];
+        $customer->email = $validatedData['email'];
+        $customer->phone = $validatedData['phone'];
         $customer->save();
 
         return redirect()->back()->with('success', 'Customer created successfully');
