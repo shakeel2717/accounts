@@ -319,26 +319,6 @@
                             </div>
                         </div>
                         <!-- End Collapse -->
-
-                        <!-- Collapse -->
-                        <div class="nav-item">
-                            <a class="nav-link dropdown-toggle " href="#navSeller" role="button"
-                                data-bs-toggle="collapse" data-bs-target="#navSeller"
-                                aria-expanded="false" aria-controls="navSeller">
-                                <i class="bi-house-door nav-icon"></i>
-                                <span class="nav-link-title">Sellers</span>
-                            </a>
-
-                            <div id="navSeller" class="nav-collapse collapse"
-                                data-bs-parent="#navbarVerticalMenu">
-                                <a class="nav-link " href="{{ route('user.seller.index') }}">All Sellers</a>
-                            </div>
-                            <div id="navSeller" class="nav-collapse collapse"
-                                data-bs-parent="#navbarVerticalMenu">
-                                <a class="nav-link " href="{{ route('user.seller.create') }}">Add new Seller</a>
-                            </div>
-                        </div>
-                        <!-- End Collapse -->
                     </div>
 
                 </div>
