@@ -178,9 +178,10 @@
   right: auto;
 }
 
+.hs-menu-initialized.hs-menu-horizontal .hs-sub-menu.hs-position-right,
 .hs-menu-initialized.hs-menu-horizontal .hs-mega-menu.hs-position-right {
   left: auto;
-  right: 0;
+  right: 0 !important;
 }
 
 .hs-menu-initialized.hs-menu-horizontal .hs-mega-menu.hs-position-center {

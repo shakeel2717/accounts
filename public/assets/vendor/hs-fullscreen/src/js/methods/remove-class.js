@@ -1,7 +1,5 @@
-export default function fullscreenRemoveClass(el, params) {
-	const options = params;
+export default function fullscreenRemoveClass(el, settings) {
+	el.classList.remove(settings.toggleClassName.slice(1))
 	
-	el.removeClass(options.toggleClassName.slice(1));
-	
-	$(options.mainContainerSelector).removeClass(options.preventScrollClassName.slice(1));
+	document.querySelector(settings.mainContainerSelector).classList.remove(settings.preventScrollClassName.slice(1))
 }

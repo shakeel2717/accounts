@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
+use App\Models\user\Customer;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -14,7 +15,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        $customers = Customer::get();
+        return view('user.dashboard.customer.index', compact('customers'));
     }
 
     /**
@@ -24,7 +26,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.dashboard.customer.create');
     }
 
     /**
@@ -35,7 +37,20 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'business_name' => 'nullable|max:255',
+            'address' => 'nullable|max:255',
+        ]);
+
+        $customer = new Customer();
+        $customer->user_id = auth()->user()->id;
+        $customer->name = $validatedData['name'];
+        $customer->business_name = $validatedData['business_name'];
+        $customer->address = $validatedData['address'];
+        $customer->save();
+
+        return redirect()->back()->with('success', 'Customer created successfully');
     }
 
     /**

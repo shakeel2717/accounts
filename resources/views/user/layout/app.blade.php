@@ -4,187 +4,199 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="author" content="Asan Webs Development">
-    <meta name="description" content="{{ env('APP_DESC') }}">
-    <title>@yield('title') - {{ env('APP_NAME') }} {{ env('APP_SHORT_DESC') }}</title>
-    <link rel="shortcut icon" href="/favi.png">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/icon-set/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/select2/dist/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/flatpickr/dist/flatpickr.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/chart.js/dist/Chart.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/daterangepicker/daterangepicker.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/theme.min.css') }}">
+    <title>{{ env('APP_NAME') }} | {{ env('APP_DESC') }}</title>
+    <link rel="shortcut icon" href="./favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/vendor/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="/assets/vendor/datatables.net.extensions/fixedColumns.dataTables.min.css">
+    <link rel="stylesheet" href="/assets/vendor/datatables.net.extensions/dataTables.scroller.min.css">
+    <link rel="stylesheet" href="/assets/vendor/tom-select/dist/css/tom-select.bootstrap5.css">
+    <link rel="preload" href="/assets/css/theme.min.css" data-hs-appearance="default" as="style">
+    <link rel="preload" href="/assets/css/docs.min.css" data-hs-appearance="default" as="style">
+    <link rel="preload" href="/assets/css/theme-dark.min.css" data-hs-appearance="dark" as="style">
+
+    <style data-hs-appearance-onload-styles>
+        * {
+            transition: unset !important;
+        }
+
+        body {
+            opacity: 0;
+        }
+
+    </style>
+
+    <script src="/assets/js/custom.js"></script>
 </head>
 
 <body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl   footer-offset">
-    <script src="{{ asset('assets/vendor/hs-navbar-vertical-aside/hs-navbar-vertical-aside-mini-cache.js') }}"></script>
-    <div id="searchDropdown" class="hs-unfold-content dropdown-unfold search-fullwidth d-md-none">
-        <form class="input-group input-group-merge input-group-borderless">
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                    <i class="tio-search"></i>
-                </div>
-            </div>
-            <input class="form-control rounded-0" type="search" placeholder="Search in front"
-                aria-label="Search in front">
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <div class="hs-unfold">
-                        <a class="js-hs-unfold-invoker" href="javascript:;" data-hs-unfold-options='{
-                                "target": "#searchDropdown",
-                                "type": "css-animation",
-                                "animationIn": "fadeIn",
-                                "hasOverlay": "rgba(46, 52, 81, 0.1)",
-                                "closeBreakpoint": "md"
-                                }'>
-                            <i class="tio-clear tio-lg"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-    <header id="header"
-        class="navbar navbar-expand-lg navbar-fixed navbar-height navbar-flush navbar-container navbar-bordered">
-        <div class="navbar-nav-wrap">
-            <div class="navbar-brand-wrapper">
-                <!-- Logo -->
-                <a class="navbar-brand" href="{{ route('user.dashboard') }}" aria-label="Front">
-                    <img class="navbar-brand-logo" src="{{ asset('assets/svg/logos/logo.svg') }}" alt="Logo">
-                    <img class="navbar-brand-logo-mini" src="{{ asset('assets/svg/logos/logo-short.svg') }}"
-                        alt="Logo">
-                </a>
-                <!-- End Logo -->
-            </div>
 
-            <div class="navbar-nav-wrap-content-left">
+    <script src="/assets/js/hs.theme-appearance.js"></script>
+
+    <script src="/assets/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside-mini-cache.js"></script>
+
+    <!-- ========== HEADER ========== -->
+
+    <header id="header"
+        class="navbar navbar-expand-lg navbar-fixed navbar-height navbar-container navbar-bordered bg-white">
+        <div class="navbar-nav-wrap">
+            <!-- Logo -->
+            <a class="navbar-brand" href="./index.html" aria-label="Front">
+                <img class="navbar-brand-logo" src="/assets/svg/logos/logo.svg" alt="Logo"
+                    data-hs-theme-appearance="default">
+                <img class="navbar-brand-logo" src="/assets/svg/logos-light/logo.svg" alt="Logo"
+                    data-hs-theme-appearance="dark">
+                <img class="navbar-brand-logo-mini" src="/assets/svg/logos/logo-short.svg" alt="Logo"
+                    data-hs-theme-appearance="default">
+                <img class="navbar-brand-logo-mini" src="/assets/svg/logos-light/logo-short.svg" alt="Logo"
+                    data-hs-theme-appearance="dark">
+            </a>
+            <!-- End Logo -->
+
+            <div class="navbar-nav-wrap-content-start">
                 <!-- Navbar Vertical Toggle -->
-                <button type="button" class="js-navbar-vertical-aside-toggle-invoker close mr-3">
-                    <i class="tio-first-page navbar-vertical-aside-toggle-short-align" data-toggle="tooltip"
-                        data-placement="right" title="Collapse"></i>
-                    <i class="tio-last-page navbar-vertical-aside-toggle-full-align"
-                        data-template='<div class="tooltip d-none d-sm-block" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
-                        data-toggle="tooltip" data-placement="right" title="Expand"></i>
+                <button type="button" class="js-navbar-vertical-aside-toggle-invoker navbar-aside-toggler">
+                    <i class="bi-arrow-bar-left navbar-toggler-short-align"
+                        data-bs-template='<div class="tooltip d-none d-md-block" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+                        data-bs-toggle="tooltip" data-bs-placement="right" title="Collapse"></i>
+                    <i class="bi-arrow-bar-right navbar-toggler-full-align"
+                        data-bs-template='<div class="tooltip d-none d-md-block" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+                        data-bs-toggle="tooltip" data-bs-placement="right" title="Expand"></i>
                 </button>
+
                 <!-- End Navbar Vertical Toggle -->
 
                 <!-- Search Form -->
-                <div class="d-none d-md-block">
-                    <form class="position-relative">
+                <div class="dropdown ms-2">
+                    <!-- Input Group -->
+                    <div class="d-none d-lg-block">
                         <div
                             class="input-group input-group-merge input-group-borderless input-group-hover-light navbar-input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <i class="tio-search"></i>
-                                </div>
+                            <div class="input-group-prepend input-group-text">
+                                <i class="bi-search"></i>
                             </div>
+
                             <input type="search" class="js-form-search form-control" placeholder="Search in front"
                                 aria-label="Search in front" data-hs-form-search-options='{
-                           "clearIcon": "#clearSearchResultsIcon",
-                           "dropMenuElement": "#searchDropdownMenu",
-                           "dropMenuOffset": 20,
-                           "toggleIconOnFocus": true,
-                           "activeClass": "focus"
-                         }'>
-                            <a class="input-group-append" href="javascript:;">
-                                <span class="input-group-text">
-                                    <i id="clearSearchResultsIcon" class="tio-clear" style="display: none;"></i>
-                                </span>
+                       "clearIcon": "#clearSearchResultsIcon",
+                       "dropMenuElement": "#searchDropdownMenu",
+                       "dropMenuOffset": 20,
+                       "toggleIconOnFocus": true,
+                       "activeClass": "focus"
+                     }'>
+                            <a class="input-group-append input-group-text" href="javascript:;">
+                                <i id="clearSearchResultsIcon" class="bi-x-lg" style="display: none;"></i>
                             </a>
                         </div>
-                        <div id="searchDropdownMenu"
-                            class="hs-form-search-menu-content card dropdown-menu dropdown-card overflow-hidden">
-                            <div class="card-body-height py-3">
-                                <small class="dropdown-header mb-n2">Recent searches</small>
+                    </div>
 
-                                <div class="dropdown-item bg-transparent text-wrap my-2">
-                                    {{-- <span class="h4">
-                                        <a class="btn btn-xs btn-soft-dark btn-pill" href="./index.html">
-                                            Notification panel <i class="tio-search ml-1"></i>
-                                        </a>
-                                    </span> --}}
+                    <button
+                        class="js-form-search js-form-search-mobile-toggle btn btn-ghost-secondary btn-icon rounded-circle d-lg-none"
+                        type="button" data-hs-form-search-options='{
+                       "clearIcon": "#clearSearchResultsIcon",
+                       "dropMenuElement": "#searchDropdownMenu",
+                       "dropMenuOffset": 20,
+                       "toggleIconOnFocus": true,
+                       "activeClass": "focus"
+                     }'>
+                        <i class="bi-search"></i>
+                    </button>
+                    <!-- End Input Group -->
+
+                    <!-- Card Search Content -->
+                    <div id="searchDropdownMenu"
+                        class="hs-form-search-menu-content dropdown-menu dropdown-menu-form-search navbar-dropdown-menu-borderless">
+                        <!-- Body -->
+                        <div class="card-body-height">
+                            <div class="d-lg-none">
+                                <div class="input-group input-group-merge navbar-input-group mb-5">
+                                    <div class="input-group-prepend input-group-text">
+                                        <i class="bi-search"></i>
+                                    </div>
+
+                                    <input type="search" class="form-control" placeholder="Search in front"
+                                        aria-label="Search in front">
+                                    <a class="input-group-append input-group-text" href="javascript:;">
+                                        <i class="bi-x-lg"></i>
+                                    </a>
                                 </div>
                             </div>
+
+                            <span class="dropdown-header">Recent searches</span>
+
+                            <div class="dropdown-item bg-transparent text-wrap">
+                                <a class="btn btn-soft-dark btn-xs rounded-pill" href="./index.html">
+                                    Gulp <i class="bi-search ms-1"></i>
+                                </a>
+                                <a class="btn btn-soft-dark btn-xs rounded-pill" href="./index.html">
+                                    Notification panel <i class="bi-search ms-1"></i>
+                                </a>
+                            </div>
+
+                            <div class="dropdown-divider"></div>
                         </div>
-                    </form>
+                        <!-- End Body -->
+                    </div>
+                    <!-- End Card Search Content -->
+
                 </div>
+
                 <!-- End Search Form -->
             </div>
 
-            <!-- Secondary Content -->
-            <div class="navbar-nav-wrap-content-right">
+            <div class="navbar-nav-wrap-content-end">
                 <!-- Navbar -->
-                <ul class="navbar-nav align-items-center flex-row">
-                    <li class="nav-item d-md-none">
-                        <!-- Search Trigger -->
-                        <div class="hs-unfold">
-                            <a class="js-hs-unfold-invoker btn btn-icon btn-ghost-secondary rounded-circle"
-                                href="javascript:;" data-hs-unfold-options='{
-                       "target": "#searchDropdown",
-                       "type": "css-animation",
-                       "animationIn": "fadeIn",
-                       "hasOverlay": "rgba(46, 52, 81, 0.1)",
-                       "closeBreakpoint": "md"
-                     }'>
-                                <i class="tio-search"></i>
-                            </a>
-                        </div>
-                        <!-- End Search Trigger -->
-                    </li>
-
+                <ul class="navbar-nav">
                     <li class="nav-item d-none d-sm-inline-block">
                         <!-- Notification -->
-                        <div class="hs-unfold">
-                            <a class="js-hs-unfold-invoker btn btn-icon btn-ghost-secondary rounded-circle"
-                                href="javascript:;" data-hs-unfold-options='{
-                       "target": "#notificationDropdown",
-                       "type": "css-animation"
-                     }'>
-                                <i class="tio-notifications-on-outlined"></i>
-                            </a>
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-ghost-secondary btn-icon rounded-circle"
+                                id="navbarNotificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false"
+                                data-bs-auto-close="outside" data-bs-dropdown-animation>
+                                <i class="bi-bell"></i>
+                                <span class="btn-status btn-sm-status btn-status-danger"></span>
+                            </button>
 
-                            <div id="notificationDropdown"
-                                class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-right navbar-dropdown-menu"
-                                style="width: 25rem;">
+                            <div class="dropdown-menu dropdown-menu-end dropdown-card navbar-dropdown-menu navbar-dropdown-menu-borderless"
+                                aria-labelledby="navbarNotificationsDropdown" style="width: 25rem;">
                                 <!-- Header -->
-                                <div class="card-header">
-                                    <span class="card-title h4">Notifications</span>
+                                <div class="card-header card-header-content-between">
+                                    <h4 class="card-title mb-0">Notifications</h4>
                                 </div>
                                 <!-- End Header -->
+
+                                <!-- Nav -->
+                                <ul class="nav nav-tabs nav-justified" id="notificationTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#notificationNavOne"
+                                            id="notificationNavOne-tab" data-bs-toggle="tab"
+                                            data-bs-target="#notificationNavOne" role="tab"
+                                            aria-controls="notificationNavOne" aria-selected="true">Notifications
+                                            (0)</a>
+                                    </li>
+                                </ul>
+                                <!-- End Nav -->
+
                                 <!-- Body -->
                                 <div class="card-body-height">
                                     <!-- Tab Content -->
                                     <div class="tab-content" id="notificationTabContent">
                                         <div class="tab-pane fade show active" id="notificationNavOne" role="tabpanel"
                                             aria-labelledby="notificationNavOne-tab">
+                                            <!-- List Group -->
                                             <ul class="list-group list-group-flush navbar-card-list-group">
-                                                <li class="list-group-item custom-checkbox-list-wrapper">
-                                                    <div class="row">
-                                                        <div class="col-auto position-static">
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="tio-lg">
-                                                                    <i class="tio">filter_list</i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col ml-n3">
-                                                            <p class="card-text font-size-sm">There are no new messages.
-                                                                You're all caught up!</p>
-                                                        </div>
-                                                    </div>
-                                                    <a class="stretched-link" href="#"></a>
-                                                </li>
                                             </ul>
+                                            <!-- End List Group -->
                                         </div>
                                     </div>
                                     <!-- End Tab Content -->
                                 </div>
                                 <!-- End Body -->
+
                                 <!-- Card Footer -->
                                 <a class="card-footer text-center" href="#">
-                                    View all notifications
-                                    <i class="tio-chevron-right"></i>
+                                    View all notifications <i class="bi-chevron-right"></i>
                                 </a>
                                 <!-- End Card Footer -->
                             </div>
@@ -192,103 +204,42 @@
                         <!-- End Notification -->
                     </li>
 
-                    <li class="nav-item d-none d-sm-inline-block">
-                        <!-- Apps -->
-                        <div class="hs-unfold">
-                            <a class="js-hs-unfold-invoker btn btn-icon btn-ghost-secondary rounded-circle"
-                                href="javascript:;" data-hs-unfold-options='{
-                       "target": "#appsDropdown",
-                       "type": "css-animation"
-                     }'>
-                                <i class="tio-menu-vs-outlined"></i>
-                            </a>
-
-                            <div id="appsDropdown"
-                                class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-right navbar-dropdown-menu"
-                                style="width: 25rem;">
-                                <!-- Header -->
-                                <div class="card-header">
-                                    <span class="card-title h4">Web apps &amp; services</span>
-                                </div>
-                                <!-- End Header -->
-
-                                <!-- Body -->
-                                <div class="card-body card-body-height">
-                                    <!-- Nav -->
-                                    <div class="nav nav-pills flex-column">
-                                        <a class="nav-link" href="#">
-                                            <div class="media align-items-center">
-                                                <span class="avatar avatar-xs avatar-soft-dark mr-3">
-                                                    <span class="avatar-initials"><i class="tio-apps"></i></span>
-                                                </span>
-                                                <div class="media-body text-truncate">
-                                                    <span class="h5 mb-0">Add New Device</span>
-                                                    <span class="d-block font-size-sm text-body">Click to Add new
-                                                        Device</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <!-- End Nav -->
-                                </div>
-                                <!-- End Body -->
-                            </div>
-                        </div>
-                        <!-- End Apps -->
-                    </li>
-
                     <li class="nav-item">
                         <!-- Account -->
-                        <div class="hs-unfold">
-                            <a class="js-hs-unfold-invoker navbar-dropdown-account-wrapper" href="javascript:;"
-                                data-hs-unfold-options='{
-                       "target": "#accountNavbarDropdown",
-                       "type": "css-animation"
-                     }'>
+                        <div class="dropdown">
+                            <a class="navbar-dropdown-account-wrapper" href="javascript:;" id="accountNavbarDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside"
+                                data-bs-dropdown-animation>
                                 <div class="avatar avatar-sm avatar-circle">
-                                    <img class="avatar-img"
-                                        src="{{ asset('assets/svg/components/placeholder-avatar.svg') }}"
-                                        alt="Profile">
+                                    <img class="avatar-img" src="/assets/img/160x160/img6.jpg"
+                                        alt="Image Description">
                                     <span class="avatar-status avatar-sm-status avatar-status-success"></span>
                                 </div>
                             </a>
 
-                            <div id="accountNavbarDropdown"
-                                class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-right navbar-dropdown-menu navbar-dropdown-account"
-                                style="width: 16rem;">
+                            <div class="dropdown-menu dropdown-menu-end navbar-dropdown-menu navbar-dropdown-menu-borderless navbar-dropdown-account"
+                                aria-labelledby="accountNavbarDropdown" style="width: 16rem;">
                                 <div class="dropdown-item-text">
-                                    <div class="media align-items-center">
-                                        <div class="avatar avatar-sm avatar-circle mr-2">
-                                            <img class="avatar-img"
-                                                src="{{ asset('assets/svg/components/placeholder-avatar.svg') }}"
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar avatar-sm avatar-circle">
+                                            <img class="avatar-img" src="/assets/img/160x160/img6.jpg"
                                                 alt="Image Description">
                                         </div>
-                                        <div class="media-body">
-                                            <span
-                                                class="card-title h5">{{ mb_strimwidth(auth()->user()->fname . ' ' . auth()->user()->lname, 0, 20, '...') }}</span>
-                                            <span
-                                                class="card-text">{{ mb_strimwidth(auth()->user()->email, 0, 20, '...') }}</span>
+                                        <div class="flex-grow-1 ms-3">
+                                            <h5 class="mb-0">Mark Williams</h5>
+                                            <p class="card-text text-body">mark@site.com</p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="dropdown-divider"></div>
 
-                                <a class="dropdown-item" href="#">
-                                    <span class="text-truncate pr-2" title="Profile &amp; account">Profile &amp;
-                                        account</span>
-                                </a>
-
-                                <a class="dropdown-item" href="#">
-                                    <span class="text-truncate pr-2" title="Settings">Settings</span>
-                                </a>
-
+                                <a class="dropdown-item" href="#">Profile &amp; account</a>
+                                <a class="dropdown-item" href="#">Settings</a>
 
                                 <div class="dropdown-divider"></div>
 
-                                <a class="dropdown-item" href="{{ route('logout') }}">
-                                    <span class="text-truncate pr-2" title="Sign out">Sign out</span>
-                                </a>
+                                <a class="dropdown-item" href="#">Sign out</a>
                             </div>
                         </div>
                     </li>
@@ -297,192 +248,272 @@
         </div>
     </header>
     <aside
-        class="js-navbar-vertical-aside navbar navbar-vertical-aside navbar-vertical navbar-vertical-fixed navbar-expand-xl navbar-bordered  ">
+        class="js-navbar-vertical-aside navbar navbar-vertical-aside navbar-vertical navbar-vertical-fixed navbar-expand-xl navbar-bordered bg-white  ">
         <div class="navbar-vertical-container">
             <div class="navbar-vertical-footer-offset">
-                <div class="navbar-brand-wrapper justify-content-between">
-                    <a class="navbar-brand" href="{{ route('user.dashboard') }}" aria-label="Front">
-                        <img class="navbar-brand-logo" src="{{ asset('assets/svg/logos/logo.svg') }}" alt="Logo">
-                        <img class="navbar-brand-logo-mini" src="{{ asset('assets/svg/logos/logo-short.svg') }}"
-                            alt="Logo">
-                    </a>
-                    <button type="button"
-                        class="js-navbar-vertical-aside-toggle-invoker navbar-vertical-aside-toggle btn btn-icon btn-xs btn-ghost-dark">
-                        <i class="tio-clear tio-lg"></i>
-                    </button>
-                </div>
+                <!-- Logo -->
+
+                <a class="navbar-brand" href="./index.html" aria-label="Front">
+                    <img class="navbar-brand-logo" src="/assets/svg/logos/logo.svg" alt="Logo"
+                        data-hs-theme-appearance="default">
+                    <img class="navbar-brand-logo" src="/assets/svg/logos-light/logo.svg" alt="Logo"
+                        data-hs-theme-appearance="dark">
+                    <img class="navbar-brand-logo-mini" src="/assets/svg/logos/logo-short.svg" alt="Logo"
+                        data-hs-theme-appearance="default">
+                    <img class="navbar-brand-logo-mini" src="/assets/svg/logos-light/logo-short.svg" alt="Logo"
+                        data-hs-theme-appearance="dark">
+                </a>
+
+                <!-- End Logo -->
+
+                <!-- Navbar Vertical Toggle -->
+                <button type="button" class="js-navbar-vertical-aside-toggle-invoker navbar-aside-toggler">
+                    <i class="bi-arrow-bar-left navbar-toggler-short-align"
+                        data-bs-template='<div class="tooltip d-none d-md-block" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+                        data-bs-toggle="tooltip" data-bs-placement="right" title="Collapse"></i>
+                    <i class="bi-arrow-bar-right navbar-toggler-full-align"
+                        data-bs-template='<div class="tooltip d-none d-md-block" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+                        data-bs-toggle="tooltip" data-bs-placement="right" title="Expand"></i>
+                </button>
+
+                <!-- End Navbar Vertical Toggle -->
+
+                <!-- Content -->
                 <div class="navbar-vertical-content">
-                    <ul class="navbar-nav navbar-nav-lg nav-tabs">
-                        <!-- Dashboards -->
-                        <li class="nav-item">
-                            <small class="nav-subtitle" title="Layouts">Overview</small>
-                            <small class="tio-more-horizontal nav-subtitle-replacer"></small>
-                        </li>
-
-                        <li class="nav-item ">
-                            <a class="js-nav-tooltip-link nav-link " href="{{ route('user.dashboard') }}"
-                                title="Layouts" data-placement="left">
-                                <i class="tio-home-vs-1-outlined nav-icon"></i>
-                                <span
-                                    class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">Dashboard</span>
+                    <div id="navbarVerticalMenu" class="nav nav-pills nav-vertical card-navbar-nav">
+                        <!-- Collapse -->
+                        <div class="nav-item">
+                            <a class="nav-link dropdown-toggle " href="#navbarVerticalMenuDashboards" role="button"
+                                data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuDashboards"
+                                aria-expanded="false" aria-controls="navbarVerticalMenuDashboards">
+                                <i class="bi-house-door nav-icon"></i>
+                                <span class="nav-link-title">Overview</span>
                             </a>
-                        </li>
 
-                        <li class="nav-item ">
-                            <a class="js-nav-tooltip-link nav-link " href="{{ route('user.customer.index') }}"
-                                title="Layouts" data-placement="left">
-                                <i class="tio-home-vs-1-outlined nav-icon"></i>
-                                <span
-                                    class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">Customers</span>
+                            <div id="navbarVerticalMenuDashboards" class="nav-collapse collapse "
+                                data-bs-parent="#navbarVerticalMenu">
+                                <a class="nav-link " href="{{ route('user.dashboard') }}">Main Dashboard</a>
+                            </div>
+                        </div>
+                        <!-- End Collapse -->
+
+                        <span class="dropdown-header mt-4">Pages</span>
+                        <small class="bi-three-dots nav-subtitle-replacer"></small>
+
+                        <!-- Collapse -->
+                        <div class="nav-item">
+                            <a class="nav-link dropdown-toggle " href="#navCustomers" role="button"
+                                data-bs-toggle="collapse" data-bs-target="#navCustomers"
+                                aria-expanded="false" aria-controls="navCustomers">
+                                <i class="bi-house-door nav-icon"></i>
+                                <span class="nav-link-title">Customers</span>
                             </a>
-                        </li>
 
-                        <li class="nav-item ">
-                            <a class="js-nav-tooltip-link nav-link " href="{{ route('user.seller.index') }}"
-                                title="Layouts" data-placement="left">
-                                <i class="tio-home-vs-1-outlined nav-icon"></i>
-                                <span
-                                    class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">Seller</span>
-                            </a>
-                        </li>
+                            <div id="navCustomers" class="nav-collapse collapse"
+                                data-bs-parent="#navbarVerticalMenu">
+                                <a class="nav-link " href="{{ route('user.customer.index') }}">All Customers</a>
+                            </div>
+                            <div id="navCustomers" class="nav-collapse collapse"
+                                data-bs-parent="#navbarVerticalMenu">
+                                <a class="nav-link " href="{{ route('user.customer.create') }}">Add new Customers</a>
+                            </div>
+                        </div>
+                        <!-- End Collapse -->
+                    </div>
 
-
-
-                        <li class="nav-item ">
-                            <a class="js-nav-tooltip-link nav-link " href="#" title="Layouts" data-placement="left">
-                                <span
-                                    class="navbar-vertical-aside-mini-mode-hidden-elements btn btn-outline btn-white"><i
-                                        class="tio-wallet nav-icon"></i>Generate Reports</span>
-                            </a>
-                        </li>
-
-
-                    </ul>
                 </div>
+                <!-- End Content -->
+
+                <!-- Footer -->
                 <div class="navbar-vertical-footer">
                     <ul class="navbar-vertical-footer-list">
                         <li class="navbar-vertical-footer-list-item">
-                            <div class="hs-unfold">
-                                <a class="js-hs-unfold-invoker btn btn-icon btn-ghost-secondary rounded-circle"
-                                    href="#">
-                                    <i class="tio-tune"></i>
-                                </a>
+                            <!-- Style Switcher -->
+                            <div class="dropdown dropup">
+                                <button type="button" class="btn btn-ghost-secondary btn-icon rounded-circle"
+                                    id="selectThemeDropdown" data-bs-toggle="dropdown" aria-expanded="false"
+                                    data-bs-dropdown-animation>
+
+                                </button>
+
+                                <div class="dropdown-menu navbar-dropdown-menu navbar-dropdown-menu-borderless"
+                                    aria-labelledby="selectThemeDropdown">
+                                    <a class="dropdown-item" href="#" data-icon="bi-moon-stars" data-value="auto">
+                                        <i class="bi-moon-stars me-2"></i>
+                                        <span class="text-truncate" title="Auto (system default)">Auto (system
+                                            default)</span>
+                                    </a>
+                                    <a class="dropdown-item" href="#" data-icon="bi-brightness-high"
+                                        data-value="default">
+                                        <i class="bi-brightness-high me-2"></i>
+                                        <span class="text-truncate" title="Default (light mode)">Default (light
+                                            mode)</span>
+                                    </a>
+                                    <a class="dropdown-item active" href="#" data-icon="bi-moon" data-value="dark">
+                                        <i class="bi-moon me-2"></i>
+                                        <span class="text-truncate" title="Dark">Dark</span>
+                                    </a>
+                                </div>
                             </div>
+
+                            <!-- End Style Switcher -->
                         </li>
                     </ul>
                 </div>
+                <!-- End Footer -->
             </div>
         </div>
     </aside>
-    <main id="content" role="main" class="main pointer-event">
+
+    <main id="content" role="main" class="main">
         <!-- Content -->
         <div class="content container-fluid">
-            <!-- Page Header -->
-            <div class="page-header">
-                <div class="row align-items-center">
-                    <div class="col-sm mb-2 mb-sm-0">
-                        <h1 class="page-header-title">@yield('title')</h1>
-                    </div>
-
-                    <div class="col-sm-auto">
-                        <a class="btn btn-primary" href="#">
-                            <i class="tio-add mr-1"></i> Add Device
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- End Page Header -->
             @yield('content')
         </div>
         <!-- End Content -->
 
         <!-- Footer -->
+
         <div class="footer">
             <div class="row justify-content-between align-items-center">
                 <div class="col">
-                    <p class="font-size-sm mb-0">&copy; {{ env('APP_NAME') }}. <span
-                            class="d-none d-sm-inline-block">{{ date('Y') }}
-                            {{ env('APP_SHORT_DESC') }}.</span></p>
+                    <p class="fs-6 mb-0">&copy; {{ env('APP_NAME') }}. <span
+                            class="d-none d-sm-inline-block">{{ date('Y') }}.</span></p>
                 </div>
-                <div class="col-auto">
-                    <div class="d-flex justify-content-end">
-                        <!-- List Dot -->
-                        <ul class="list-inline list-separator">
-                            <li class="list-inline-item">
-                                <a class="list-separator-link" href="#">FAQ</a>
-                            </li>
-
-                            <li class="list-inline-item">
-                                <a class="list-separator-link" href="#">License</a>
-                            </li>
-                        </ul>
-                        <!-- End List Dot -->
-                    </div>
-                </div>
+                <!-- End Col -->
             </div>
+            <!-- End Row -->
         </div>
-    </main>
-    <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/jquery-migrate/dist/jquery-migrate.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/hs-navbar-vertical-aside/hs-navbar-vertical-aside.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/hs-unfold/dist/hs-unfold.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/hs-form-search/dist/hs-form-search.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/select2/dist/js/select2.full.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/chart.js/dist/Chart.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/chart.js.extensions/chartjs-extensions.js') }}"></script>
-    <script src="{{ asset('assets/vendor/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/daterangepicker/moment.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/daterangepicker/daterangepicker.js') }}"></script>
-    <script src="{{ asset('assets/vendor/datatables/media/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/datatables.net.extensions/select/select.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/flatpickr/dist/flatpickr.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/clipboard/dist/clipboard.min.js') }}"></script>
-    <script src="{{ asset('assets/js/theme.min.js') }}"></script>
-    <script src="{{ asset('assets/js/hs.flatpickr.js') }}"></script>
-    <script>
-        $(document).on('ready', function() {
-            // INITIALIZATION OF FLATPICKR
-            // =======================================================
-            $('.js-flatpickr').each(function() {
-                $.HSCore.components.HSFlatpickr.init($(this));
-            });
-        });
-    </script>
-    <script>
-        $(document).on('ready', function() {
-            $('.js-navbar-vertical-aside-toggle-invoker').click(function() {
-                $('.js-navbar-vertical-aside-toggle-invoker i').tooltip('hide');
-            });
-            var sidebar = $('.js-navbar-vertical-aside').hsSideNav();
-            $('.js-nav-tooltip-link').tooltip({
-                boundary: 'window'
-            })
-            $(".js-nav-tooltip-link").on("show.bs.tooltip", function(e) {
-                if (!$("body").hasClass("navbar-vertical-aside-mini-mode")) {
-                    return false;
-                }
-            });
-            $('.js-hs-unfold-invoker').each(function() {
-                var unfold = new HSUnfold($(this)).init();
-            });
-            $('.js-form-search').each(function() {
-                new HSFormSearch($(this)).init()
-            });
-            $('.js-select2-custom').each(function() {
-                var select2 = $.HSCore.components.HSSelect2.init($(this));
-            });
-            Chart.plugins.unregister(ChartDataLabels);
-            var start = moment();
-            var end = moment();
 
-            function cb(start, end) {
-                $('#js-daterangepicker-predefined .js-daterangepicker-predefined-preview').html(start.format(
-                    'MMM D') + ' - ' + end.format('MMM D, YYYY'));
+        <!-- End Footer -->
+    </main>
+    <!-- ========== END MAIN CONTENT ========== -->
+    <!-- JS Global Compulsory  -->
+    <script src="/assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
+    <script src="/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JS Implementing Plugins -->
+    <script src="/assets/vendor/hs-header/dist/hs-header.min.js"></script>
+    <script src="/assets/vendor/hs-nav-scroller/dist/hs-nav-scroller.min.js"></script>
+    <script src="/assets/vendor/list.js/dist/list.min.js"></script>
+    <script src="/assets/vendor/hs-go-to/dist/hs-go-to.min.js"></script>
+    <script src="/assets/vendor/prism/prism.js"></script>
+    <script src="/assets/vendor/daterangepicker/moment.min.js"></script>
+    <script src="/assets/vendor/daterangepicker/daterangepicker.js"></script>
+    <script src="/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="/assets/vendor/datatables.net.extensions/select/select.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/assets/vendor/jszip/dist/jszip.min.js"></script>
+    <script src="/assets/vendor/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/assets/vendor/pdfmake/build/vfs_fonts.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/assets/vendor/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="/assets/vendor/datatables.net.extensions/dataTables.fixedColumns.min.js"></script>
+    <script src="/assets/vendor/sortablejs/Sortable.min.js"></script>
+    <script src="/assets/vendor/tom-select/dist/js/tom-select.complete.min.js"></script>
+
+    <!-- JS Implementing Plugins -->
+    <script src="/assets/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside.min.js"></script>
+    <script src="/assets/vendor/hs-form-search/dist/hs-form-search.min.js"></script>
+
+    <!-- JS Front -->
+    <script src="/assets/js/theme.min.js"></script>
+
+    <!-- JS Plugins Init. -->
+    <script>
+        (function() {
+            window.onload = function() {
+
+
+                // INITIALIZATION OF NAVBAR VERTICAL ASIDE
+                // =======================================================
+                new HSSideNav('.js-navbar-vertical-aside').init()
+
+
+                // INITIALIZATION OF FORM SEARCH
+                // =======================================================
+                new HSFormSearch('.js-form-search')
+
+
+                // INITIALIZATION OF BOOTSTRAP DROPDOWN
+                // =======================================================
+                HSBsDropdown.init()
             }
-        });
+        })()
     </script>
-    @yield('footer')
+
+    <!-- Style Switcher JS -->
+
+    <script>
+        (function() {
+            // STYLE SWITCHER
+            // =======================================================
+            const $dropdownBtn = document.getElementById('selectThemeDropdown') // Dropdowon trigger
+            const $variants = document.querySelectorAll(
+                `[aria-labelledby="selectThemeDropdown"] [data-icon]`) // All items of the dropdown
+
+            // Function to set active style in the dorpdown menu and set icon for dropdown trigger
+            const setActiveStyle = function() {
+                $variants.forEach($item => {
+                    if ($item.getAttribute('data-value') === HSThemeAppearance.getOriginalAppearance()) {
+                        $dropdownBtn.innerHTML = `<i class="${$item.getAttribute('data-icon')}" />`
+                        return $item.classList.add('active')
+                    }
+
+                    $item.classList.remove('active')
+                })
+            }
+
+            // Add a click event to all items of the dropdown to set the style
+            $variants.forEach(function($item) {
+                $item.addEventListener('click', function() {
+                    HSThemeAppearance.setAppearance($item.getAttribute('data-value'))
+                })
+            })
+
+            // Call the setActiveStyle on load page
+            setActiveStyle()
+
+            // Add event listener on change style to call the setActiveStyle function
+            window.addEventListener('on-hs-appearance-change', function() {
+                setActiveStyle()
+            })
+        })()
+    </script>
+
+    <script>
+        (function() {
+            // INITIALIZATION OF DATATABLES
+            // =======================================================
+            HSCore.components.HSDatatables.init('.js-datatable')
+            const exportDatatable = HSCore.components.HSDatatables.getItem('exportDatatable')
+
+            document.getElementById('export-copy').addEventListener('click', function() {
+                exportDatatable.button('.buttons-copy').trigger()
+            })
+
+            document.getElementById('export-excel').addEventListener('click', function() {
+                exportDatatable.button('.buttons-excel').trigger()
+            })
+
+            document.getElementById('export-csv').addEventListener('click', function() {
+                exportDatatable.button('.buttons-csv').trigger()
+            })
+
+            document.getElementById('export-pdf').addEventListener('click', function() {
+                exportDatatable.button('.buttons-pdf').trigger()
+            })
+
+            document.getElementById('export-print').addEventListener('click', function() {
+                exportDatatable.button('.buttons-print').trigger()
+            })
+        })()
+    </script>
+    <x-alert />
+    <!-- End Style Switcher JS -->
 </body>
 
 </html>

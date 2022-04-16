@@ -39,7 +39,7 @@ gulp.task('js-build', function () {
 });
 
 gulp.task('main-watch', function () {
-	gulp.watch('./src/js/hs-nav-scroller.js', gulp.series('js-build'));
+	gulp.watch('./src/**/*.js', gulp.series('js-build'));
 });
 
 // Default Task

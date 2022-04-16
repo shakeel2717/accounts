@@ -1,8 +1,26 @@
 var gulp = require('gulp'),
 	rename = require('gulp-rename'),
+	sass = require('gulp-sass'),
+	autoprefixer = require('gulp-autoprefixer'),
+	cssnano = require('gulp-cssnano'),
 	uglify = require('gulp-uglify'),
 	webpack = require('webpack'),
 	webpackStream = require('webpack-stream');
+
+gulp.task('sass-build', function () {
+	return gulp.src('./src/scss/**/*.scss')
+		.pipe(sass({outputStyle: 'expanded'}))
+		.pipe(autoprefixer(['last 5 versions', '> 1%'], {cascade: true}))
+		.pipe(gulp.dest('./src/css'))
+		.pipe(gulp.dest('./dist'))
+		.pipe(cssnano({
+			zindex: false
+		}))
+		.pipe(rename({
+			suffix: '.min'
+		}))
+		.pipe(gulp.dest('./dist'))
+});
 
 gulp.task('js-build', function () {
 	return gulp.src('./src/js/hs-scrollspy.js')
@@ -25,9 +43,6 @@ gulp.task('js-build', function () {
 						}
 					}
 				]
-			},
-			externals: {
-				jquery: 'jQuery'
 			}
 		}))
 		.pipe(gulp.dest('./dist/'))
@@ -39,7 +54,8 @@ gulp.task('js-build', function () {
 });
 
 gulp.task('main-watch', function () {
-	gulp.watch('./src/js/hs-scrollspy.js', gulp.series('js-build'));
+	gulp.watch('./src/scss/**/*.scss', gulp.series('sass-build'));
+	gulp.watch('./src/js/**/*.js', gulp.series('js-build'));
 });
 
 // Default Task

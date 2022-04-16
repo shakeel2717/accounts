@@ -21,7 +21,7 @@
   "_resolved": "https://registry.npmjs.org/chartjs-plugin-datalabels/-/chartjs-plugin-datalabels-0.7.0.tgz",
   "_shasum": "f72e44edb2db45ef68913e9320bcc50398a205e6",
   "_spec": "chartjs-plugin-datalabels@^0.7.0",
-  "_where": "/Applications/MAMP/htdocs/front/front-dashboard",
+  "_where": "/Users/jahaganiev/Documents/work/hs/themes/front-dashboard",
   "bugs": {
     "url": "https://github.com/chartjs/chartjs-plugin-datalabels/issues"
   },

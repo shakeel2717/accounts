@@ -1,5 +1,5 @@
 {
-  "_from": "chart.js@^2.9.3",
+  "_from": "chart.js@^2.9.4",
   "_id": "chart.js@2.9.4",
   "_inBundle": false,
   "_integrity": "sha512-B07aAzxcrikjAPyV+01j7BmOpxtQETxTSlQ26BEYJ+3iUkbNKaOJ/nDbT6JjyqYxseM0ON12COHYdU2cTIjC7A==",
@@ -8,20 +8,20 @@
   "_requested": {
     "type": "range",
     "registry": true,
-    "raw": "chart.js@^2.9.3",
+    "raw": "chart.js@^2.9.4",
     "name": "chart.js",
     "escapedName": "chart.js",
-    "rawSpec": "^2.9.3",
+    "rawSpec": "^2.9.4",
     "saveSpec": null,
-    "fetchSpec": "^2.9.3"
+    "fetchSpec": "^2.9.4"
   },
   "_requiredBy": [
     "/"
   ],
   "_resolved": "https://registry.npmjs.org/chart.js/-/chart.js-2.9.4.tgz",
   "_shasum": "0827f9563faffb2dc5c06562f8eb10337d5b9684",
-  "_spec": "chart.js@^2.9.3",
-  "_where": "/Applications/MAMP/htdocs/front/front-dashboard",
+  "_spec": "chart.js@^2.9.4",
+  "_where": "/Users/jahaganiev/Documents/work/hs/themes/front-dashboard",
   "bugs": {
     "url": "https://github.com/chartjs/Chart.js/issues"
   },

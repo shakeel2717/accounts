@@ -1,92 +1,74 @@
 /*
 * HSScrollspy Plugin
-* @version: 3.0.1 (Sat, 11 Jul 2020)
-* @requires: jQuery v3.0 or later, Bootstrap 4.5 or later
+* @version: 1.0.0 (Wed, 24 Nov 2021)
 * @author: HtmlStream
 * @event-namespace: .HSScrollspy
 * @license: Htmlstream Libraries (https://htmlstream.com/)
-* Copyright 2020 Htmlstream
+* Copyright 2021 Htmlstream
 */
 
+import smoothscroll from 'smoothscroll-polyfill';
+
+// kick off the polyfill!
+smoothscroll.polyfill();
+
 export default class HSScrollspy {
-	constructor(element, config) {
-		this.element = element;
-		this.defaults = {
-			topLevelComponent: 'html, body',
-			duration: 400,
-			easing: 'linear',
-			beforeScroll: null,
-			afterScroll: null
-		};
-		this.config = config;
-	}
-	
-	init() {
-		const self = this,
-			element = self.element,
-			BSData = {
-				offset: element.data('offset') ? element.data('offset') : 0,
-				target: element.data('target') ? element.data('target') : null,
-				method: element.data('method') ? element.data('method') : 'auto'
-			},
-			dataSettings = $(element).attr('data-hs-scrollspy-options') ? JSON.parse($(element).attr('data-hs-scrollspy-options')) : {};
-		
-		self.config = Object.assign({}, self.defaults, BSData, dataSettings, self.config);
-		
-		console.log(self.config);
-		
-		self._bindEvents();
-		
-		$(element).scrollspy(self.config);
-	}
-	
-	_bindEvents() {
-		const self = this;
-		
-		$(self.config.target).on('click', 'a:not([href="#"]):not([href="#0"])', function (e) {
-			let $this = this,
-				hash,
-				offsetTop;
-			
-			e.preventDefault();
-			
-			let promise = new Promise((resolve) => {
-				if ($.isFunction(self.config.beforeScroll)) {
-					self.config.beforeScroll(resolve);
-				} else {
-					resolve('completed');
-				}
-			});
-			
-			promise.then(
-				completed => {
-					if ($this.hash !== '' && $($this.hash).length) {
-						hash = $this.hash;
-						offsetTop = self.config.topLevelComponent === 'html, body' ?
-							($(hash).offset().top + 2) - self.config.offset :
-							$(self.config.topLevelComponent).scrollTop() - $(self.config.topLevelComponent).offset().top + (($(hash).offset().top + 2) - self.config.offset);
-						
-						// Smooth scroll
-						$(self.config.topLevelComponent).animate({
-							scrollTop: offsetTop
-						}, {
-							duration: self.config.duration,
-							easing: self.config.easing,
-							complete: function () {
-								if (history.replaceState) {
-									history.replaceState(null, null, hash);
-								}
-								
-								if ($.isFunction(self.config.afterScroll)) {
-									self.config.afterScroll();
-								}
-							}
-						});
-						
-						return false;
-					}
-				}
-			);
-		});
-	}
+  constructor(elem, settings) {
+    this.$el = typeof elem === "string" ? document.querySelector(elem) : elem
+    this.defaults = {
+      disableCollapse: null,
+      scrollOffset: 0,
+      collapsibleNav: null,
+      resolutionsList: {
+        xs: 0,
+        sm: 576,
+        md: 768,
+        lg: 992,
+        xl: 1200
+      },
+      resetOffset: null,
+      breakpoint: 'lg',
+      scrollspyContainer: document.body
+    };
+    this.dataSettings = this.$el.hasAttribute('data-hs-scrollspy-options') ? JSON.parse(this.$el.getAttribute('data-hs-scrollspy-options')) : {},
+      this.settings = Object.assign({}, this.defaults, this.dataSettings, settings)
+
+    this.init()
+  }
+
+  init() {
+    this.scrollSpyInstance = bootstrap.ScrollSpy.getInstance(this.settings.scrollspyContainer)
+    const nav = typeof this.scrollSpyInstance._config.target === "object" ? this.scrollSpyInstance._config.target : document.querySelector(this.scrollSpyInstance._config.target)
+
+    if (this.settings.disableCollapse === null && this.$el.classList.contains('collapse')) {
+      this.settings.disableCollapse = false
+    }
+
+    nav.addEventListener('click', e => {
+      if (!e.target.closest('a:not([href="#"]):not([href="#0"])')) return
+      e.preventDefault()
+      if (this.settings.disableCollapse === false && window.innerWidth < this.settings.resolutionsList[this.settings.breakpoint]) {
+        new bootstrap.Collapse(this.$el).hide()
+        return this.$el.addEventListener('hidden.bs.collapse', () => {
+          this.smoothScroll(e)
+        })
+      } else {
+        this.smoothScroll(e)
+      }
+    })
+  }
+
+  smoothScroll(e) {
+    const offsetIndex = this.scrollSpyInstance._targets.findIndex(t => t === e.target.hash),
+      offset = this.settings.resetOffset
+      && window.innerWidth < this.settings.resolutionsList[this.settings.resetOffset]
+        ? 0
+        : this.scrollSpyInstance._config.offset
+
+    window.scroll({
+      top: (this.scrollSpyInstance._offsets[offsetIndex] - offset) - this.settings.scrollOffset,
+      left: 0,
+      behavior: 'smooth'
+    })
+  }
 }

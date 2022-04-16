@@ -1,12 +1,10 @@
-import fullscreenAddClass from "./add-class";
-import fullscreenRemoveClass from "./remove-class";
+import fullscreenAddClass from "./add-class"
+import fullscreenRemoveClass from "./remove-class"
 
-export default function fullscreenToggleClass(el, params) {
-	const options = params;
-	
-	if (!el.hasClass(options.toggleClassName.slice(1))) {
-		fullscreenAddClass(el, options);
+export default function fullscreenToggleClass(el, settings) {
+	if (!el.classList.contains(settings.toggleClassName.slice(1))) {
+		fullscreenAddClass(el, settings)
 	} else {
-		fullscreenRemoveClass(el, options);
+		fullscreenRemoveClass(el, settings)
 	}
 }

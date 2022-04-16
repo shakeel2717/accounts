@@ -1,95 +1,173 @@
+/*
+* HSLoadingState Plugin
+* @version: 2.0.0 (Sun, 1 Aug 2021)
+* @author: HtmlStream
+* @event-namespace: .HSLoadingState
+* @license: Htmlstream Libraries (https://htmlstream.com/)
+* Copyright 2021 Htmlstream
+*/
+
+
+import {fadeOut, createElementFromHTML} from "../utils";
+import fullscreenToggleClass from "../../../hs-fullscreen/src/js/methods/toggle-class";
+import fullscreenRemoveClass from "../../../hs-fullscreen/src/js/methods/remove-class";
+
+const dataAttributeName = 'data-hs-loading-state-options'
+const defaults = {
+  targetEl: null,
+  targetElStyles: {
+    position: ''
+  },
+  targetElCustomStyles: {
+    position: 'relative'
+  },
+
+  eventType: 'click',
+  loaderMode: 'simple',
+  loaderText: 'Loading...',
+  removeLoaderDelay: 1500,
+
+  loaderContainerClassNames: 'hs-loader-wrapper',
+  loaderContainerExtendedClassNames: '',
+
+  loaderClassNames: 'hs-loader',
+  loaderExtendedClassNames: '',
+  loaderWithTextClassNames: 'hs-loader-with-text',
+
+  loaderIconClassNames: 'spinner-border spinner-border-sm text-primary',
+  loaderIconExtendedClassNames: '',
+
+  loaderTextClassNames: 'hs-loader-text',
+  loaderTextExtendedClassNames: '',
+
+  beforeLoading: null,
+  afterLoading: null
+}
+
 export default class HSLoadingState {
-	constructor(elem, settings) {
-		this.elem = elem;
-		this.defaults = {
-			targetEl: null,
-			targetElStyles: {
-				position: ''
-			},
-			targetElCustomStyles: {
-				position: 'relative'
-			},
+  constructor(el, options, id) {
+    this.collection = []
+    const that = this
+    let elems
 
-			eventType: 'click',
-			loaderMode: 'simple',
-			loaderText: 'Loading...',
-			removeLoaderDelay: 1500,
+    if (el instanceof HTMLElement) {
+      elems = [el]
+    } else if (el instanceof Object) {
+      elems = el
+    } else {
+      elems = document.querySelectorAll(el)
+    }
 
-			loaderContainerClassNames: 'hs-loader-wrapper',
-			loaderContainerExtendedClassNames: '',
+    for (let i = 0; i < elems.length; i += 1) {
+      that.addToCollection(elems[i], options, id || elems[i].id)
+    }
 
-			loaderClassNames: 'hs-loader',
-			loaderExtendedClassNames: '',
-			loaderWithTextClassNames: 'hs-loader-with-text',
+    if (!that.collection.length) {
+      return false
+    }
 
-			loaderIconClassNames: 'spinner-border spinner-border-sm text-primary',
-			loaderIconExtendedClassNames: '',
+    // initialization calls
+    that._init()
 
-			loaderTextClassNames: 'hs-loader-text',
-			loaderTextExtendedClassNames: '',
+    return this
+  }
+  
+  _init() {
+    const that = this;
 
-			beforeLoading: null,
-			afterLoading: null
-		};
-		this.settings = settings;
-	}
+    for (let i = 0; i < that.collection.length; i += 1) {
+      let _$el
+      let _options
 
-	init() {
-		const context = this,
-			$el = context.elem,
-			dataSettings = $el.attr('data-hs-loading-state-options') ? JSON.parse($el.attr('data-hs-loading-state-options')) : {},
-			options = $.extend(true, context.defaults, dataSettings, context.settings);
+      if (that.collection[i].hasOwnProperty('$initializedEl')) {
+        continue
+      }
 
-		context._loading($el, options);
-	}
+      _$el = that.collection[i].$el
+      _options = that.collection[i].options
 
-	_loading(el, config) {
-		const context = this;
+      this._loading(_$el, _options)
 
-		el.on(config.eventType, function () {
-			const $loader = $(context._selectTemplate(config));
+      that.collection[i].$initializedEl = _options
+    }
+  }
 
-			if (typeof config.beforeLoading === 'function') {
-				let before = config.beforeLoading(el, config);
+  _loading($el, settings) {
+    const that = this
+    $el.addEventListener(settings.eventType,  () => {
+      const $loader = createElementFromHTML(that._selectTemplate(settings))
 
-				if (before === false) return;
-			}
+      if (typeof settings.beforeLoading === 'function') {
+        let before = settings.beforeLoading($el, settings);
 
-			$(config.targetEl)
-				.css(config.targetElCustomStyles)
-				.append($loader);
+        if (before === false) return;
+      }
 
-			$loader.show();
+      const $target = document.querySelector(settings.targetEl)
 
-			setTimeout(function () {
-				$loader.fadeOut(400, function () {
-					$(config.targetEl)
-						.css(config.targetElStyles);
+      $target.style = settings.targetElCustomStyles
+      $target.appendChild($loader)
 
-					$(this).remove();
+      $loader.style.display = 'block'
 
-					if (typeof config.afterLoading === 'function') {
-						config.afterLoading(el, config);
-					}
-				});
-			}, config.removeLoaderDelay);
-		});
-	}
+      setTimeout(() => {
+        fadeOut($loader, 400, () => {
+          document.querySelector(settings.targetEl).style = settings.targetElStyles
 
-	_selectTemplate(config) {
-		if (config.loaderMode === 'with-text') {
-			return `<div class="${config.loaderContainerClassNames} ${config.loaderContainerExtendedClassNames}">
-				<div class="${config.loaderClassNames} ${config.loaderExtendedClassNames} ${config.loaderWithTextClassNames}">
-					<span class="${config.loaderTextClassNames} ${config.loaderTextExtendedClassNames}">${config.loaderText}</span>
-					<span class="${config.loaderIconClassNames} ${config.loaderIconExtendedClassNames}"></span>
+          $loader.parentNode.removeChild($loader)
+
+          if (typeof settings.afterLoading === 'function') {
+            settings.afterLoading($el, settings);
+          }
+        });
+      }, settings.removeLoaderDelay);
+    });
+  }
+
+  _selectTemplate(settings) {
+    if (settings.loaderMode === 'with-text') {
+      return `<div class="${settings.loaderContainerClassNames} ${settings.loaderContainerExtendedClassNames}">
+				<div class="${settings.loaderClassNames} ${settings.loaderExtendedClassNames} ${settings.loaderWithTextClassNames}">
+					<span class="${settings.loaderTextClassNames} ${settings.loaderTextExtendedClassNames}">${settings.loaderText}</span>
+					<span class="${settings.loaderIconClassNames} ${settings.loaderIconExtendedClassNames}"></span>
 				</div>
       </div>`;
-		} else {
-			return `<div class="${config.loaderContainerClassNames} ${config.loaderContainerExtendedClassNames}">
-				<div class="${config.loaderClassNames} ${config.loaderExtendedClassNames}">
-					<span class="${config.loaderIconClassNames} ${config.loaderIconExtendedClassNames}"></span>
+    } else {
+      return `<div class="${settings.loaderContainerClassNames} ${settings.loaderContainerExtendedClassNames}">
+				<div class="${settings.loaderClassNames} ${settings.loaderExtendedClassNames}">
+					<span class="${settings.loaderIconClassNames} ${settings.loaderIconExtendedClassNames}"></span>
 				</div>
       </div>`;
-		}
-	}
+    }
+  }
+
+  addToCollection(item, options, id) {
+    this.collection.push({
+      $el: item,
+      id: id || null,
+      options: Object.assign(
+        {},
+        defaults,
+        item.hasAttribute(dataAttributeName)
+          ? JSON.parse(item.getAttribute(dataAttributeName))
+          : {},
+        options,
+      ),
+    });
+  }
+
+  getItems() {
+    const that = this;
+    let newCollection = [];
+
+    for (let i = 0; i < that.collection.length; i += 1) {
+      newCollection.push(that.collection[i].$initializedEl);
+    }
+
+    return newCollection;
+  }
+
+  getItem(ind) {
+    return this.collection[ind].$initializedEl;
+  }
 }

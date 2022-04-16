@@ -28,9 +28,6 @@ gulp.task('js-build', function () {
 						}
 					}
 				]
-			},
-			externals: {
-				jquery: 'jQuery'
 			}
 		}))
 		.pipe(gulp.dest('./dist/'))
@@ -42,7 +39,7 @@ gulp.task('js-build', function () {
 });
 
 gulp.task('main-watch', function () {
-	gulp.watch('./src/js/hs-form-search.js', gulp.series('js-build'));
+	gulp.watch('./src/js/**/*.js', gulp.series('js-build'));
 });
 
 // Default Task

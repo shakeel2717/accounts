@@ -15,14 +15,29 @@
     "link": "./customization.html"
   },
   {
-    "component": "Typography",
-    "category": "Content",
-    "link": "./typography.html"
+    "component": "Credits",
+    "category": "Getting Started",
+    "link": "./credits.html"
   },
   {
-    "component": "Icon set",
-    "category": "Content",
-    "link": "./icon-set.html"
+    "component": "Changelog",
+    "category": "Getting Started",
+    "link": "./changelog.html"
+  },
+  {
+    "component": "Bootstrap Icons",
+    "category": "Design & Graphics",
+    "link": "./bootstrap-icons.html"
+  },
+  {
+    "component": "Illustrations",
+    "category": "Design & Graphics",
+    "link": "./illustrations.html"
+  },
+  {
+    "component": "Accordion",
+    "category": "Components",
+    "link": "./accordion.html"
   },
   {
     "component": "Alerts",
@@ -50,6 +65,11 @@
     "link": "./buttons.html"
   },
   {
+    "component": "Button group",
+    "category": "Components",
+    "link": "./button-group.html"
+  },
+  {
     "component": "Cards",
     "category": "Components",
     "link": "./cards.html"
@@ -65,6 +85,11 @@
     "link": "./column-divider.html"
   },
   {
+    "component": "Devices",
+    "category": "Components",
+    "link": "./devices.html"
+  },
+  {
     "component": "Divider",
     "category": "Components",
     "link": "./divider.html"
@@ -75,9 +100,9 @@
     "link": "./dropdowns.html"
   },
   {
-    "component": "Legend indicator",
+    "component": "Icons",
     "category": "Components",
-    "link": "./legend-indicator.html"
+    "link": "./icons.html"
   },
   {
     "component": "List Group",
@@ -90,22 +115,22 @@
     "link": "./lists.html"
   },
   {
+    "component": "Legend Indicator",
+    "category": "Components",
+    "link": "./legend-indicator.html"
+  },
+  {
     "component": "Modal",
     "category": "Components",
     "link": "./modal.html"
   },
   {
-    "component": "Navbar",
+    "component": "Offcanvas",
     "category": "Components",
-    "link": "./navbar.html"
+    "link": "./offcanvas.html"
   },
   {
-    "component": "Navs",
-    "category": "Components",
-    "link": "./navs.html"
-  },
-  {
-    "component": "Page header",
+    "component": "Page Header",
     "category": "Components",
     "link": "./page-header.html"
   },
@@ -125,9 +150,19 @@
     "link": "./progress.html"
   },
   {
-    "component": "Profile cover",
+    "component": "Profile",
     "category": "Components",
-    "link": "./profile-cover.html"
+    "link": "./profile.html"
+  },
+  {
+    "component": "Shapes",
+    "category": "Components",
+    "link": "./shapes.html"
+  },
+  {
+    "component": "Sliding Image",
+    "category": "Components",
+    "link": "./sliding-img.html"
   },
   {
     "component": "Spinners",
@@ -145,39 +180,59 @@
     "link": "./tab.html"
   },
   {
+    "component": "Toasts",
+    "category": "Components",
+    "link": "./toasts.html"
+  },
+  {
     "component": "Tooltips",
     "category": "Components",
     "link": "./tooltips.html"
   },
   {
-    "component": "Borders",
-    "category": "Utilities",
-    "link": "./borders.html"
+    "component": "Typography",
+    "category": "Components",
+    "link": "./typography.html"
   },
   {
-    "component": "Colors",
-    "category": "Utilities",
-    "link": "./colors.html"
+    "component": "Navbar",
+    "category": "Navbars",
+    "link": "./navbar.html"
   },
   {
-    "component": "Positions",
-    "category": "Utilities",
-    "link": "./positions.html"
+    "component": "Navs",
+    "category": "Navbars",
+    "link": "./navs.html"
   },
   {
-    "component": "Sizing",
-    "category": "Utilities",
-    "link": "./sizing.html"
+    "component": "Mega Menu",
+    "category": "Navbars",
+    "link": "./mega-menu.html"
   },
   {
-    "component": "Text",
-    "category": "Utilities",
-    "link": "./text.html"
+    "component": "Navbar Vertical Aside",
+    "category": "Navbars",
+    "link": "./navbar-vertical-aside.html"
   },
   {
-    "component": "Others",
-    "category": "Utilities",
-    "link": "./others.html"
+    "component": "Scrollspy",
+    "category": "Navbars",
+    "link": "./scrollspy.html"
+  },
+  {
+    "component": "Tables",
+    "category": "Tables",
+    "link": "./tables.html"
+  },
+  {
+    "component": "Datatables",
+    "category": "Tables",
+    "link": "./datatables.html"
+  },
+  {
+    "component": "Sticky Header",
+    "category": "Tables",
+    "link": "./sticky-header.html"
   },
   {
     "component": "Basic forms",
@@ -195,17 +250,72 @@
     "link": "./input-group.html"
   },
   {
-    "component": "Advanced select (Select2)",
-    "category": "Advanced forms",
-    "link": "./select2.html"
+    "component": "Backgrounds",
+    "category": "Utilities",
+    "link": "./backgrounds.html"
   },
   {
-    "component": "Datepicker (Flatpickr)",
-    "category": "Advanced forms",
-    "link": "./flatpickr.html"
+    "component": "Borders",
+    "category": "Utilities",
+    "link": "./borders.html"
   },
   {
-    "component": "Date range picker",
+    "component": "Colors",
+    "category": "Utilities",
+    "link": "./colors.html"
+  },
+  {
+    "component": "Links",
+    "category": "Utilities",
+    "link": "./links.html"
+  },
+  {
+    "component": "Position",
+    "category": "Utilities",
+    "link": "./position.html"
+  },
+  {
+    "component": "Rotations",
+    "category": "Utilities",
+    "link": "./rotations.html"
+  },
+  {
+    "component": "Shadows",
+    "category": "Utilities",
+    "link": "./shadows.html"
+  },
+  {
+    "component": "Sizing",
+    "category": "Utilities",
+    "link": "./sizing.html"
+  },
+  {
+    "component": "Spacing",
+    "category": "Utilities",
+    "link": "./spacing.html"
+  },
+  {
+    "component": "Z-index",
+    "category": "Utilities",
+    "link": "./z-index.html"
+  },
+  {
+    "component": "Opacity",
+    "category": "Utilities",
+    "link": "./opacity.html"
+  },
+  {
+    "component": "Advanced select",
+    "category": "Advanced forms",
+    "link": "./select.html"
+  },
+  {
+    "component": "Datepicker",
+    "category": "Advanced forms",
+    "link": "./datepicker.html"
+  },
+  {
+    "component": "Date Range Picker",
     "category": "Advanced forms",
     "link": "./daterangepicker.html"
   },
@@ -217,7 +327,7 @@
   {
     "component": "File attachments",
     "category": "Advanced forms",
-    "link": "./file-attach.html"
+    "link": "./file-attachments.html"
   },
   {
     "component": "Drag’ n’ drop file uploads",
@@ -230,54 +340,19 @@
     "link": "./quill.html"
   },
   {
-    "component": "Copy to clipboard",
-    "category": "Advanced forms",
-    "link": "./clipboard.html"
-  },
-  {
     "component": "Quantity counter",
     "category": "Advanced forms",
     "link": "./quantity-counter.html"
   },
   {
+    "component": "Copy to Clipboard",
+    "category": "Advanced forms",
+    "link": "./copy-to-clipboard.html"
+  },
+  {
     "component": "Input mask",
     "category": "Advanced forms",
     "link": "./input-mask.html"
-  },
-  {
-    "component": "Add field(s)",
-    "category": "Advanced forms",
-    "link": "./add-field.html"
-  },
-  {
-    "component": "Toggle password(s)",
-    "category": "Advanced forms",
-    "link": "./toggle-password.html"
-  },
-  {
-    "component": "Count characters",
-    "category": "Advanced forms",
-    "link": "./count-characters.html"
-  },
-  {
-    "component": "Form search",
-    "category": "Advanced forms",
-    "link": "./form-search.html"
-  },
-  {
-    "component": "Toggle switch",
-    "category": "Advanced forms",
-    "link": "./toggle-switch.html"
-  },
-  {
-    "component": "Range slider",
-    "category": "Advanced forms",
-    "link": "./ion-range-slider.html"
-  },
-  {
-    "component": "Password strength",
-    "category": "Advanced forms",
-    "link": "./password-strength.html"
   },
   {
     "component": "Step forms (Wizards)",
@@ -290,9 +365,29 @@
     "link": "./step-forms.html"
   },
   {
-    "component": "Input Tags (Tagify)",
+    "component": "Add field",
     "category": "Advanced forms",
-    "link": "./tagify.html"
+    "link": "./add-field.html"
+  },
+  {
+    "component": "Toggle password",
+    "category": "Advanced forms",
+    "link": "./toggle-password.html"
+  },
+  {
+    "component": "Count characters",
+    "category": "Advanced forms",
+    "link": "./count-characters.html"
+  },
+  {
+    "component": "Form Search",
+    "category": "Advanced forms",
+    "link": "./form-search.html"
+  },
+  {
+    "component": "Toggle switch",
+    "category": "Advanced forms",
+    "link": "./toggle-switch.html"
   },
   {
     "component": "Google reCAPTCHA",
@@ -300,72 +395,37 @@
     "link": "./google-recaptcha.html"
   },
   {
-    "component": "Form validation",
-    "category": "Advanced forms",
-    "link": "./form-validation.html"
-  },
-  {
-    "component": "Mega menu",
-    "category": "Navbar",
-    "link": "./mega-menu.html"
-  },
-  {
-    "component": "Navbar vertical aside",
-    "category": "Navbar",
-    "link": "./navbar-vertical-aside.html"
-  },
-  {
-    "component": "Tables",
-    "category": "Tables",
-    "link": "./tables.html"
-  },
-  {
-    "component": "Editable rows",
-    "category": "Tables",
-    "link": "./table-editable-rows.html"
-  },
-  {
-    "component": "Sticky thead",
-    "category": "Tables",
-    "link": "./sticky-thead.html"
-  },
-  {
-    "component": "Datatables",
-    "category": "Tables",
-    "link": "./datatables.html"
-  },
-  {
-    "component": "Counter",
-    "category": "Charts",
-    "link": "./counter.html"
-  },
-  {
     "component": "Chart.js",
-    "category": "Charts",
+    "category": "Others",
     "link": "./chartjs.html"
   },
   {
-    "component": "Circles",
-    "category": "Charts",
+    "component": "Counter",
+    "category": "Others",
+    "link": "./counter.html"
+  },
+  {
+    "component": "Circles.js (Pie Chart)",
+    "category": "Others",
     "link": "./circles.html"
   },
   {
-    "component": "Leaflet",
-    "category": "Maps",
-    "link": "./leaflet.html"
-  },
-  {
-    "component": "jVectorMap",
-    "category": "Maps",
-    "link": "./jvectormap.html"
-  },
-  {
-    "component": "Scrollspy",
+    "component": "Fullscreen Lightbox",
     "category": "Others",
-    "link": "./scrollspy.html"
+    "link": "./fslightbox.html"
   },
   {
-    "component": "Sortablejs",
+    "component": "Leaflet",
+    "category": "Others",
+    "link": "./maps-leaflet.html"
+  },
+  {
+    "component": "JSVectorMap",
+    "category": "Others",
+    "link": "./maps-jsvectormap.html"
+  },
+  {
+    "component": "SortableJS",
     "category": "Others",
     "link": "./sortablejs.html"
   },
@@ -375,18 +435,8 @@
     "link": "./sticky-block.html"
   },
   {
-    "component": "Go-to",
+    "component": "Go To",
     "category": "Others",
     "link": "./go-to.html"
-  },
-  {
-    "component": "FanxyBox",
-    "category": "Others",
-    "link": "./fancybox.html"
-  },
-  {
-    "component": "Unfold",
-    "category": "Others",
-    "link": "./unfold.html"
   }
 ]

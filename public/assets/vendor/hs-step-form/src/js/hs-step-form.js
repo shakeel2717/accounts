@@ -1,185 +1,359 @@
 
 /*
 * HSStepForm Plugin
-* @version: 2.0.0 (Mon, 25 Nov 2019)
-* @requires: jQuery v3.0 or later
+* @version: 3.0.1 (Sun, 1 Aug 2021)
 * @author: HtmlStream
 * @event-namespace: .HSStepForm
 * @license: Htmlstream Libraries (https://htmlstream.com/)
-* Copyright 2019 Htmlstream
+* Copyright 2021 Htmlstream
 */
 
+const dataAttributeName = 'data-hs-step-form-options'
+const defaults = {
+  progressSelector: null,
+  progressItems: null,
+
+  stepsSelector: null,
+  stepsItems: null,
+  stepsActiveItem: null,
+
+  nextSelector: '[data-hs-step-form-next-options]',
+  prevSelector: '[data-hs-step-form-prev-options]',
+  endSelector: null,
+
+  isValidate: false,
+
+  classMap: {
+    active: 'active',
+    checked: 'is-valid',
+    error: 'is-invalid',
+    required: 'js-step-required',
+    focus: 'focus'
+  },
+
+  finish: () => {
+  },
+
+  preventNextStep: () => {
+    return new Promise((resolve, reject) => {
+      resolve()
+    })
+  },
+
+  onNextStep: () => {
+  },
+
+  onPrevStep: () => {
+  }
+}
+
 export default class HSStepForm {
-  constructor(elem, settings) {
-    this.elem = elem;
-    this.defaults = {
-      progressSelector: null,
-      progressItems: null,
+  constructor(el, options, id) {
+    this.collection = []
+    const that = this
+    let elems
 
-      stepsSelector: null,
-      stepsItems: null,
-      stepsActiveItem: null,
+    if (el instanceof HTMLElement) {
+      elems = [el]
+    } else if (el instanceof Object) {
+      elems = el
+    } else {
+      elems = document.querySelectorAll(el)
+    }
 
-      nextSelector: '[data-hs-step-form-next-options]',
-      prevSelector: '[data-hs-step-form-prev-options]',
-      endSelector: null,
+    for (let i = 0; i < elems.length; i += 1) {
+      that.addToCollection(elems[i], options, id || elems[i].id)
+    }
 
-      isValidate: false,
+    if (!that.collection.length) {
+      return false
+    }
 
-      classMap: {
-        active: 'active',
-        checked: 'is-valid',
-        error: 'is-invalid',
-        required: 'js-step-required',
-        focus: 'focus'
-      },
+    // initialization calls
+    that._init()
 
-      finish: () => {
-      },
+    return this
+  }
 
-      onNextStep: () => {
-      },
+  _init() {
+    const that = this;
 
-      onPrevStep: () => {
+    for (let i = 0; i < that.collection.length; i += 1) {
+      let _$el
+      let _options
+
+      if (that.collection[i].hasOwnProperty('$initializedEl')) {
+        continue
       }
-    };
-    this.settings = settings;
+
+      _$el = that.collection[i].$el;
+      _options = that.collection[i].options
+
+      _options.progressItems = _$el.querySelector(_options.progressSelector).children
+      _options.stepsItems = _$el.querySelector(_options.stepsSelector).children
+      _options.stepsActiveItem = _$el.querySelector(_options.stepsSelector).querySelector(`.${_options.classMap.active}`)
+
+      that._prepareObject(_$el, _options)
+
+      _$el.querySelectorAll(_options.nextSelector).forEach(item => {
+        item.addEventListener('click', () => {
+          that._nextClickEvents(_$el, _options, item)
+        })
+      })
+
+      _$el.querySelectorAll(_options.prevSelector).forEach(item => {
+        item.addEventListener('click', () => {
+          that._prevClickEvents(_$el, _options, item)
+        })
+      })
+
+      _$el.querySelectorAll(_options.endSelector).forEach(item => {
+        item.addEventListener('click', () => {
+          that._endClickEvents(_$el, _options)
+        })
+      })
+
+      that.collection[i].$initializedEl = _options
+    }
   }
 
-  init() {
-    const context = this,
-      $el = context.elem,
-      dataSettings = $el.attr('data-hs-step-form-options') ? JSON.parse($el.attr('data-hs-step-form-options')) : {};
-    let options = $.extend(true, context.defaults, dataSettings, context.settings);
+  _prepareObject($el, settings) {
+    $el.querySelector(settings.stepsSelector).querySelectorAll(`:scope > :not(.${settings.classMap.active})`).forEach(item => {
+      item.style.display = 'none'
+    })
 
-    options.progressItems = $(options.progressSelector).find('> *');
-    options.stepsItems = $(options.stepsSelector).find('> *');
-    options.stepsActiveItem = $(options.stepsSelector).find(`> .${options.classMap.active}`);
-
-    context._prepareObject($el, options);
-
-    $el.find(options.nextSelector).on('click', function () {
-      context._nextClickEvents($el, options, $(this));
-    });
-
-    $el.find(options.prevSelector).on('click', function () {
-      context._prevClickEvents($el, options, $(this));
-    });
-
-    $el.find(options.endSelector).on('click', function () {
-      context._endClickEvents($el, options, $(this));
-    });
+    settings.progressItems[[...settings.stepsActiveItem.parentNode.children].indexOf(settings.stepsActiveItem)].classList.add(settings.classMap.active, settings.classMap.focus)
   }
 
-  _prepareObject(el, params) {
-    let options = params;
+  _endClickEvents($el, settings) {
+    let isValid = true
 
-    options.stepsItems.not(`.${options.classMap.active}`).hide();
-    options.progressItems.eq(options.stepsActiveItem.index()).addClass(options.classMap.active).addClass(options.classMap.focus);
+    if (settings.isValidate) {
+      $el.classList.remove('was-validated')
+      settings.progressItems[settings.progressItems.length - 1].classList.remove(settings.classMap.error)
+
+      Array.from($el.elements)
+        .forEach(item => {
+          if (item.offsetParent !== null && !item.checkValidity()) {
+            isValid = false
+
+            settings.progressItems[settings.progressItems.length - 1].classList.add(settings.classMap.error)
+
+            if (settings.validator) {
+              settings.validator.updateFieldStete(item)
+              $el.classList.add('was-validated')
+            }
+          }
+        })
+    }
+
+    if (isValid) {
+      return settings.finish($el, settings)
+    }
   }
 
-  _endClickEvents(el, params) {
-    let options = params;
-
-    return params.finish();
-  }
-
-  _nextClickEvents(el, params, nextEl) {
-    const nextDataSettings = nextEl.attr('data-hs-step-form-next-options') ? JSON.parse(nextEl.attr('data-hs-step-form-next-options')) : {};
-    let options = params,
-      nextItemDefaults = {
+  _nextClickEvents($el, settings, nextEl) {
+    const nextDataSettings = nextEl.hasAttribute('data-hs-step-form-next-options') ? JSON.parse(nextEl.getAttribute('data-hs-step-form-next-options')) : {}
+    let nextItemDefaults = {
         targetSelector: null
       },
-      nextItemOptions = $.extend(true, nextItemDefaults, nextDataSettings);
+      nextItemOptions = Object.assign({}, nextItemDefaults, nextDataSettings)
 
-    for (let i = 0; i < options.progressItems.length; i++) {
-      if (typeof $(window).validate !== 'undefined' && options.isValidate) {
-        if ($(nextItemOptions.targetSelector).index() > i) {
-          $(options.progressItems[i]).addClass(options.classMap.error);
+    const targetSelector = $el.querySelector(nextItemOptions.targetSelector)
+    const targetIndex = [...targetSelector.parentNode.children].indexOf(targetSelector)
 
-          let requiredSelector = $(options.progressItems[i]).find(options.nextSelector).attr('data-hs-step-form-next-options');
+    for (let i = 0; i < settings.progressItems.length; i++) {
+      if (settings.isValidate) {
+        if (settings.validator) {
+          $el.classList.remove('was-validated')
+        }
 
-          options.stepsItems.hide().removeClass(options.classMap.active);
+        if (targetIndex > i) {
+          settings.progressItems[i].classList.add(settings.classMap.error)
 
-          $(JSON.parse(requiredSelector).targetSelector).show().addClass(options.classMap.active);
+          let requiredSelector = settings.progressItems[i].querySelector(settings.nextSelector).getAttribute('data-hs-step-form-next-options')
 
-          if (!el.valid()) {
-            return false;
+          for (let item of settings.stepsItems) {
+            item.classList.remove(settings.classMap.active)
+            item.style.display = 'none'
+          }
+
+          const newTargetSelector = $el.querySelector(JSON.parse(requiredSelector).targetSelector)
+
+          newTargetSelector.classList.add(settings.classMap.active)
+          newTargetSelector.style.display = 'block'
+
+          let isValid = true
+
+          Array.from($el.elements)
+            .forEach(item => {
+              if (item.offsetParent !== null && !item.checkValidity()) {
+                isValid = false
+
+                if (settings.validator) {
+                  settings.validator.updateFieldStete(item)
+                  $el.classList.add('was-validated')
+                }
+              }
+            })
+
+          if (!isValid) {
+            settings.progressItems[i].classList.remove(settings.classMap.checked)
+            return false
           } else {
-            $(options.progressItems[i]).removeClass(options.classMap.error);
+            settings.progressItems[i].classList.remove(settings.classMap.error)
           }
         }
 
-        if ($(nextItemOptions.targetSelector).index() > i && options.isValidate) {
-          $(options.progressItems[i]).addClass(options.classMap.checked);
+        if (targetIndex > i && settings.isValidate) {
+          settings.progressItems[i].classList.add(settings.classMap.checked)
         }
       } else {
-        if ($(nextItemOptions.targetSelector).index() > i && options.isValidate) {
-          $(options.progressItems[i]).addClass(options.classMap.checked);
+        if (targetIndex > i && settings.isValidate) {
+          settings.progressItems[i].classList.add(settings.classMap.checked)
         }
 
-        if ($(nextItemOptions.targetSelector).index() > i && !options.isValidate) {
-          $(options.progressItems[i]).addClass(options.classMap.active);
+        if (targetIndex > i && !settings.isValidate) {
+          settings.progressItems[i].classList.add(settings.classMap.active)
         }
       }
     }
 
-    options.progressItems.removeClass(options.classMap.active).removeClass(options.classMap.focus);
-    options.progressItems.eq($(nextItemOptions.targetSelector).index()).addClass(options.classMap.active).addClass(options.classMap.focus);
+    settings.preventNextStep($el)
+      .then(() => {
+        for (let item of settings.progressItems) {
+          item.classList.remove(settings.classMap.active, settings.classMap.focus)
+        }
 
-    options.stepsItems.hide().removeClass(options.classMap.active);
-    $(nextItemOptions.targetSelector).fadeIn(400).addClass(options.classMap.active);
+        settings.progressItems[targetIndex].classList.add(settings.classMap.active, settings.classMap.focus)
 
-    return options.onNextStep();
+        for (let item of settings.stepsItems) {
+          item.classList.remove(settings.classMap.active)
+          item.style.display = 'none'
+        }
+
+        targetSelector.classList.add(settings.classMap.active)
+        this.fadeIn(targetSelector, 400)
+
+        return settings.onNextStep()
+      })
   }
 
-  _prevClickEvents(el, params, prevEl) {
-    let options = params,
-      prevItemDefaults = {
+  _prevClickEvents($el, settings, prevEl) {
+    const prevDataSettings = prevEl.hasAttribute('data-hs-step-form-prev-options') ? JSON.parse(prevEl.getAttribute('data-hs-step-form-prev-options')) : {}
+    let prevItemDefaults = {
         targetSelector: null
-      };
+      },
+      prevItemOptions = Object.assign({}, prevItemDefaults, prevDataSettings)
 
-    const prevDataSettings = prevEl.attr('data-hs-step-form-prev-options') ? JSON.parse(prevEl.attr('data-hs-step-form-prev-options')) : {};
-    let prevItemOptions = $.extend(true, prevItemDefaults, prevDataSettings);
+    const targetSelector = $el.querySelector(prevItemOptions.targetSelector)
+    const targetIndex = [...targetSelector.parentNode.children].indexOf(targetSelector)
 
-    for (let i = 0; i < options.progressItems.length; i++) {
-      if (typeof $(window).validate !== 'undefined' && options.isValidate) {
-        if ($(prevItemOptions.targetSelector).index() > i) {
-          $(options.progressItems[i]).addClass(options.classMap.error);
+    for (let i = 0; i < settings.progressItems.length; i++) {
+      if (settings.isValidate) {
+        if (targetIndex > i) {
+          settings.progressItems[i].classList.add(settings.classMap.error)
 
-          let requiredSelector = $(options.progressItems[i]).find(options.nextSelector).attr('data-hs-step-form-next-options');
+          let requiredSelector = settings.progressItems[i].querySelector(settings.nextSelector).getAttribute('data-hs-step-form-next-options')
 
-          options.stepsItems.hide().removeClass(options.classMap.active);
+          for (let item of settings.stepsItems) {
+            item.classList.remove(settings.classMap.active)
+            item.style.display = 'none'
+          }
 
-          $(JSON.parse(requiredSelector).targetSelector).show().addClass(options.classMap.active);
+          const newTargetSelector = $el.querySelector(JSON.parse(requiredSelector).targetSelector)
 
-          if (!el.valid()) {
-            return false;
+          newTargetSelector.classList.add(settings.classMap.active)
+          newTargetSelector.style.display = 'block'
+
+
+          let isValid = true
+
+          Array.from($el.elements)
+            .forEach(item => {
+              if (item.offsetParent !== null && !item.checkValidity()) {
+                isValid = false
+              }
+            })
+
+          if (!isValid) {
+            settings.progressItems[i].classList.remove(settings.classMap.checked)
+            return false
           } else {
-            $(options.progressItems[i]).removeClass(options.classMap.error);
+            settings.progressItems[i].classList.remove(settings.classMap.error)
           }
         }
 
-        if ($(prevItemOptions.targetSelector).index() > i && options.isValidate) {
-          $(options.progressItems[i]).addClass(options.classMap.checked);
+        if (targetIndex > i && settings.isValidate) {
+          settings.progressItems[i].classList.add(settings.classMap.checked)
         }
       } else {
-        if ($(prevItemOptions.targetSelector).index() > i && options.isValidate) {
-          $(options.progressItems[i]).addClass(options.classMap.checked);
+        if (targetIndex > i && settings.isValidate) {
+          settings.progressItems[i].classList.add(settings.classMap.checked)
         }
 
-        if ($(prevItemOptions.targetSelector).index() > i && !options.isValidate) {
-          $(options.progressItems[i]).addClass(options.classMap.active);
+        if (targetIndex > i && !settings.isValidate) {
+          settings.progressItems[i].classList.add(settings.classMap.active)
         }
       }
     }
 
-    options.progressItems.removeClass(options.classMap.active).removeClass(options.classMap.focus);
-    options.progressItems.eq($(prevItemOptions.targetSelector).index()).addClass(options.classMap.active).addClass(options.classMap.focus);
+    for (let item of settings.progressItems) {
+      item.classList.remove(settings.classMap.active, settings.classMap.focus)
+    }
 
-    options.stepsItems.hide().removeClass(options.classMap.active);
-    $(prevItemOptions.targetSelector).fadeIn(400).addClass(options.classMap.active);
+    settings.progressItems[targetIndex].classList.add(settings.classMap.active, settings.classMap.focus)
 
-    return options.onPrevStep();
+    for (let item of settings.stepsItems) {
+      item.classList.remove(settings.classMap.active)
+      item.style.display = 'none'
+    }
+
+    targetSelector.classList.add(settings.classMap.active)
+    this.fadeIn(targetSelector, 400)
+
+    return settings.onPrevStep()
+  }
+
+  fadeIn(el, time) {
+    el.style.opacity = 0
+    el.style.display = 'block'
+
+    var last = +new Date()
+    var tick = function() {
+      el.style.opacity = +el.style.opacity + (new Date() - last) / time
+      last = +new Date()
+
+      if (+el.style.opacity < 1) {
+        (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16)
+      }
+    }
+
+    tick()
+  }
+
+  addToCollection (item, options, id) {
+    this.collection.push({
+      $el: item,
+      id: id || null,
+      options: Object.assign(
+        {},
+        defaults,
+        item.hasAttribute(dataAttributeName)
+          ? JSON.parse(item.getAttribute(dataAttributeName))
+          : {},
+        options,
+      ),
+    })
+  }
+
+  getItem (item) {
+    if (typeof item === 'number') {
+      return this.collection[item].$initializedEl;
+    } else {
+      return this.collection.find(el => {
+        return el.id === item;
+      }).$initializedEl;
+    }
   }
 }

@@ -1,7 +1,5 @@
-export default function fullscreenAddClass(el, params) {
-	const options = params;
+export default function fullscreenAddClass(el, settings) {
+	el.classList.add(settings.toggleClassName.slice(1))
 	
-	el.addClass(options.toggleClassName.slice(1));
-	
-	$(options.mainContainerSelector).addClass(options.preventScrollClassName.slice(1));
+	document.querySelector(settings.mainContainerSelector).classList.add(settings.preventScrollClassName.slice(1))
 }

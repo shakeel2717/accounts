@@ -1,3 +1,4 @@
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 @if ($errors->any())
     @foreach ($errors->all() as $error)
         <script>
@@ -5,8 +6,8 @@
         </script>
     @endforeach
 @endif
-@if (session('message') || session('status'))
+@if (session('message') || session('status') || session('success'))
     <script>
-        swal("Success!", "{{ session('message') }}", "success");
+        swal("Success!", "{{ session('success') }}", "success");
     </script>
 @endif

@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\SellerController;
+use App\Http\Controllers\user\CustomerController;
+use App\Http\Controllers\user\SellerController;
 use App\Http\Controllers\user\UserDashboardController;
 use Illuminate\Support\Facades\Route;
 

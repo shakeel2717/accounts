@@ -1,8 +1,8 @@
 {
   "_from": "jquery-migrate@^3.3.0",
-  "_id": "jquery-migrate@3.3.1",
+  "_id": "jquery-migrate@3.3.2",
   "_inBundle": false,
-  "_integrity": "sha512-QAXfshB6xqaANDX8OPExKnnooLtX0cSDCKfRnqhdv+3CVEVD9L1v3zNAhZum/4AukKlWUWUoxM6ywJJcLMXLSA==",
+  "_integrity": "sha512-L3gYhr7yEtLUSAeqXSicVa0vRD4aGwjw/bWY8YzrO2o/qDY1BaMyP3oB3bZf5Auy3Hu9ynliio0CTyDWCBPVDw==",
   "_location": "/jquery-migrate",
   "_phantomChildren": {},
   "_requested": {
@@ -18,10 +18,10 @@
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/jquery-migrate/-/jquery-migrate-3.3.1.tgz",
-  "_shasum": "0f8e2b7531228fda5d88be58dc0e7d5848e52fd1",
+  "_resolved": "https://registry.npmjs.org/jquery-migrate/-/jquery-migrate-3.3.2.tgz",
+  "_shasum": "7829ee24de3054d0d2f42dd093390d8a7b7af01a",
   "_spec": "jquery-migrate@^3.3.0",
-  "_where": "/Applications/MAMP/htdocs/front/front-dashboard",
+  "_where": "/Users/jahaganiev/Documents/work/hs/themes/front-dashboard",
   "author": {
     "name": "OpenJS Foundation and other contributors",
     "url": "https://openjsf.org"
@@ -61,6 +61,7 @@
   "devDependencies": {
     "chalk": "4.0.0",
     "commitplease": "3.2.0",
+    "enquirer": "2.3.6",
     "eslint": "7.2.0",
     "eslint-config-jquery": "3.0.0",
     "eslint-plugin-import": "2.21.1",
@@ -107,5 +108,5 @@
     "test": "grunt test"
   },
   "title": "jQuery Migrate",
-  "version": "3.3.1"
+  "version": "3.3.2"
 }

@@ -1,117 +1,178 @@
 /*
 * HSCounter Plugin
-* @version: 2.0.0 (Mon, 25 Nov 2019)
-* @requires: jQuery v3.0 or later, appear.js v1.0.3
+* @version: 2.0.1 (Sun, 0 Aug 2021)
+* @requires: appear.js v1.0.3
 * @author: HtmlStream
 * @event-namespace: .HSCounter
 * @license: Htmlstream Libraries (https://htmlstream.com/)
-* Copyright 2019 Htmlstream
+* Copyright 2021 Htmlstream
 */
 
+const dataAttributeName = 'data-hs-counter-options'
+const defaults = {
+  bounds: -100,
+  debounce: 10,
+  time: 2000,
+  fps: 60,
+  isCommaSeparated: false,
+  isReduceThousandsTo: false,
+  intervalId: null
+}
+
 export default class HSCounter {
-	constructor(elem, settings) {
-		this.elem = elem;
-		this.defaults = {
-			bounds: -100,
-			debounce: 10,
-			time: 2000,
-			fps: 60,
-			isCommaSeparated: false,
-			isReduceThousandsTo: false,
-			intervalId: null
-		};
-		this.settings = settings;
-	}
+  constructor(el, options, id) {
+    this.collection = []
+    const that = this
+    let elems
 
-	init() {
-		const context = this,
-			$el = context.elem,
-			dataSettings = $el.attr('data-hs-counter-options') ? JSON.parse($el.attr('data-hs-counter-options')) : {};
-		let options = $.extend(true, context.defaults, dataSettings, context.settings);
-		const appearSettings = {
-			init: function () {
-				var value = parseInt($el.text(), 10);
+    if (el instanceof HTMLElement) {
+      elems = [el]
+    } else if (el instanceof Object) {
+      elems = el
+    } else {
+      elems = document.querySelectorAll(el)
+    }
 
-				$el.text('0');
-				$el.attr('data-value', value);
-			},
-			elements: function () {
-				return $el;
-			},
-			appear: function (innerEl) {
-				var $item = $(innerEl),
-					counter = 1,
-					endValue = $item.data('value'),
-					iterationValue = parseInt(endValue / (options.time / options.fps), 10);
+    for (let i = 0; i < elems.length; i += 1) {
+      that.addToCollection(elems[i], options, id || elems[i].id)
+    }
 
-				if (iterationValue === 0) {
-					iterationValue = 1;
-				}
+    if (!that.collection.length) {
+      return false
+    }
 
-				$item.data('intervalId', setInterval(function () {
-					if (options.isCommaSeparated) {
-						$item.text(context._getCommaSeparatedValue(counter += iterationValue));
-					} else if (options.isReduceThousandsTo) {
-						$item.text(context._getCommaReducedValue(counter += iterationValue, options.isReduceThousandsTo));
-					} else {
-						$item.text(counter += iterationValue);
-					}
+    // initialization calls
+    that._init()
 
-					if (counter > endValue) {
-						clearInterval($item.data('intervalId'));
+    return this
+  }
 
-						if (options.isCommaSeparated) {
-							$item.text(context._getCommaSeparatedValue(endValue));
-						} else if (options.isReduceThousandsTo) {
-							$item.text(context._getCommaReducedValue(endValue, options.isReduceThousandsTo));
-						} else {
-							$item.text(endValue);
-						}
-					}
-				}, options.time / options.fps));
-			}
-		};
-		options = $.extend(true, options, appearSettings);
+  _init() {
+    const that = this;
 
-		appear(options);
-	}
+    for (let i = 0; i < that.collection.length; i += 1) {
+      let _$el
+      let _options
 
-	_getCommaReducedValue(value, additionalText) {
-		return parseInt(value / 1000, 10) + additionalText;
-	}
+      if (that.collection[i].hasOwnProperty('$initializedEl')) {
+        continue
+      }
 
-	_getCommaSeparatedValue(value) {
-		value = value.toString();
+      _$el = that.collection[i].$el;
+      _options = that.collection[i].options
 
-		switch (value.length) {
-			case 4:
-				return `${value.substr(0, 1)},${value.substr(1)}`;
-				break;
-			case 5:
-				return `${value.substr(0, 2)},${value.substr(2)}`;
-				break;
-			case 6:
-				return `${value.substr(0, 3)},${value.substr(3)}`;
-				break;
-			case 7:
-				value = `${value.substr(0, 1)},${value.substr(1)}`;
-				return `${value.substr(0, 5)},${value.substr(5)}`;
-				break;
-			case 8:
-				value = `${value.substr(0, 2)},${value.substr(2)}`;
-				return `${value.substr(0, 6)},${value.substr(6)}`;
-				break;
-			case 9:
-				value = `${value.substr(0, 3)},${value.substr(3)}`;
-				return `${value.substr(0, 7)},${value.substr(7)}`;
-				break;
-			case 10:
-				value = `${value.substr(0, 1)},${value.substr(1)}`;
-				value = `${value.substr(0, 5)},${value.substr(5)}`;
-				return `${value.substr(0, 9)},${value.substr(9)}`;
-				break;
-			default:
-				return value;
-		}
-	}
+      const appearSettings = Object.assign({}, this.settings, {
+        init: () => {
+          var value = parseInt(_$el.textContent, 10)
+
+          _$el.innerHTML = '0'
+          _$el.setAttribute('data-value', value)
+        },
+        elements: () => {
+          return [_$el]
+        },
+        appear: (innerEl) => {
+          var $item = innerEl,
+            counter = 1,
+            endValue = $item.getAttribute('data-value'),
+            iterationValue = parseInt(endValue / (_options.time / _options.fps), 10)
+
+          if (iterationValue === 0) {
+            iterationValue = 1
+          }
+
+          $item.data = {
+            intervalId: setInterval(() => {
+              if (_options.isCommaSeparated) {
+                $item.innerHTML = this._getCommaSeparatedValue(counter += iterationValue)
+              } else if (_options.isReduceThousandsTo) {
+                $item.innerHTML = this._getCommaReducedValue(counter += iterationValue, _options.isReduceThousandsTo)
+              } else {
+                $item.innerHTML = counter += iterationValue
+              }
+
+              if (counter > endValue) {
+                clearInterval($item.data.intervalId)
+
+                if (_options.isCommaSeparated) {
+                  $item.innerHTML = this._getCommaSeparatedValue(endValue)
+                } else if (_options.isReduceThousandsTo) {
+                  $item.innerHTML = this._getCommaReducedValue(endValue, _options.isReduceThousandsTo)
+                } else {
+                  $item.innerHTML = endValue
+                }
+              }
+            }, _options.time / _options.fps)
+          }
+        }
+      })
+      appear(appearSettings)
+
+      that.collection[i].$initializedEl = _options
+    }
+  }
+
+  _getCommaReducedValue(value, additionalText) {
+    return parseInt(value / 1000, 10) + additionalText
+  }
+
+  _getCommaSeparatedValue(value) {
+    value = value.toString()
+
+    switch (value.length) {
+      case 4:
+        return `${value.substr(0, 1)},${value.substr(1)}`
+        break
+      case 5:
+        return `${value.substr(0, 2)},${value.substr(2)}`
+        break
+      case 6:
+        return `${value.substr(0, 3)},${value.substr(3)}`
+        break
+      case 7:
+        value = `${value.substr(0, 1)},${value.substr(1)}`
+        return `${value.substr(0, 5)},${value.substr(5)}`
+        break
+      case 8:
+        value = `${value.substr(0, 2)},${value.substr(2)}`
+        return `${value.substr(0, 6)},${value.substr(6)}`
+        break
+      case 9:
+        value = `${value.substr(0, 3)},${value.substr(3)}`
+        return `${value.substr(0, 7)},${value.substr(7)}`
+        break
+      case 10:
+        value = `${value.substr(0, 1)},${value.substr(1)}`
+        value = `${value.substr(0, 5)},${value.substr(5)}`
+        return `${value.substr(0, 9)},${value.substr(9)}`
+        break
+      default:
+        return value
+    }
+  }
+
+  addToCollection (item, options, id) {
+    this.collection.push({
+      $el: item,
+      id: id || null,
+      options: Object.assign(
+        {},
+        defaults,
+        item.hasAttribute(dataAttributeName)
+          ? JSON.parse(item.getAttribute(dataAttributeName))
+          : {},
+        options,
+      ),
+    })
+  }
+
+  getItem (item) {
+    if (typeof item === 'number') {
+      return this.collection[item].$initializedEl;
+    } else {
+      return this.collection.find(el => {
+        return el.id === item;
+      }).$initializedEl;
+    }
+  }
 }
