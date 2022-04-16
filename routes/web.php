@@ -13,6 +13,7 @@ Route::redirect('/user/dashboard', '/user/dashboard/index', 301);
 Route::prefix('user/dashboard')->name('user.')->middleware(['auth', 'user'])->group(function () {
     Route::get('/index', [UserDashboardController::class, 'index'])->name('dashboard');
     Route::resource('customer', CustomerController::class);
+    Route::post('transaction/gaveStore', [TransactionController::class,'gaveStore'])->name('transaction.gaveStore');
     Route::resource('transaction', TransactionController::class);
 
 });

@@ -55,6 +55,28 @@ class TransactionController extends Controller
 
     }
 
+
+    public function gaveStore(Request $request)
+    {
+        $validatedData = $request->validate([
+            'amount' => 'required|numeric',
+            'description' => 'required|string',
+            'customer_id' => 'required|string',
+        ]);
+
+        // adding new transaction
+        $transaction = new Transaction();
+        $transaction->user_id = auth()->user()->id;
+        $transaction->customer_id = $validatedData['customer_id'];
+        $transaction->amount = $validatedData['amount'];
+        $transaction->sum = 'out';
+        $transaction->description = $validatedData['description'];
+        $transaction->save();
+
+        return redirect()->back()->with('success', 'Transaction added successfully');
+
+    }
+
     /**
      * Display the specified resource.
      *

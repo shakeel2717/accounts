@@ -45,7 +45,7 @@
                         <div class="col-lg-6">
                             <!-- Card -->
                             <a class="card card-dashed card-centered" href="javascript:;" data-bs-toggle="modal"
-                                data-bs-target="#accountAddCardModal">
+                                data-bs-target="#AddCardModalGave">
                                 <div class="card-body card-dashed-body py-8">
                                     <img class="avatar avatar-lg avatar-4x3 mb-2"
                                         src="/assets/svg/illustrations/oc-minus-card.svg" alt="Image Description"
@@ -138,36 +138,36 @@
                         <table id="exportDatatable"
                             class="js-datatable table table-borderless table-thead-bordered table-nowrap table-align-middle card-table"
                             data-hs-datatables-options='{
-                                                                                                                      "dom": "Bfrtip",
-                                                                                                                      "buttons": [
-                                                                                                                        {
-                                                                                                                          "extend": "copy",
-                                                                                                                          "className": "d-none"
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                          "extend": "excel",
-                                                                                                                          "className": "d-none"
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                          "extend": "csv",
-                                                                                                                          "className": "d-none"
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                          "extend": "pdf",
-                                                                                                                          "className": "d-none"
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                          "extend": "print",
-                                                                                                                          "className": "d-none"
-                                                                                                                        }
-                                                                                                                     ],
-                                                                                                                     "order": [],
-                                                                                               "search": "#datatableWithSearchInput",
-                                                                                               "isResponsive": false,
-                                                                                               "isShowPaging": false,
-                                                                                               "pagination": "datatableWithSearchPagination"
-                                                                                                                     
-                                                                                                                   }'>
+                                                                                                                          "dom": "Bfrtip",
+                                                                                                                          "buttons": [
+                                                                                                                            {
+                                                                                                                              "extend": "copy",
+                                                                                                                              "className": "d-none"
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                              "extend": "excel",
+                                                                                                                              "className": "d-none"
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                              "extend": "csv",
+                                                                                                                              "className": "d-none"
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                              "extend": "pdf",
+                                                                                                                              "className": "d-none"
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                              "extend": "print",
+                                                                                                                              "className": "d-none"
+                                                                                                                            }
+                                                                                                                         ],
+                                                                                                                         "order": [],
+                                                                                                   "search": "#datatableWithSearchInput",
+                                                                                                   "isResponsive": false,
+                                                                                                   "isShowPaging": false,
+                                                                                                   "pagination": "datatableWithSearchPagination"
+                                                                                                                         
+                                                                                                                       }'>
                             <thead class="thead-light">
                                 <tr>
                                     <th>Amount</th>
@@ -228,6 +228,47 @@
                     <div class="modal-body">
                         <!-- Form -->
                         <form action="{{ route('user.transaction.store') }}" method="POST">
+                            @csrf
+                            <!-- Form -->
+                            <div class="mb-4">
+                                <label for="amount" class="form-label">Amount</label>
+                                <input type="text" class="form-control" name="amount" placeholder="Amount">
+                            </div>
+                            <div class="mb-4">
+                                <label for="description" class="form-label">Description</label>
+                                <input type="text" class="form-control" name="description" placeholder="Description">
+                                <input type="hidden" name="customer_id" value="{{ $customer->id }}">
+                            </div>
+                            <!-- End Form -->
+
+                            <div class="d-flex justify-content-end gap-3">
+                                <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Add Transaction</button>
+                            </div>
+                        </form>
+                        <!-- End Form -->
+                    </div>
+                    <!-- End Body -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Card Modal -->
+        <div class="modal fade" id="AddCardModalGave" tabindex="-1" aria-labelledby="accountAddCardModalLabel"
+            role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <!-- Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="accountAddCardModalLabel">You Gave</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- End Header -->
+
+                    <!-- Body -->
+                    <div class="modal-body">
+                        <!-- Form -->
+                        <form action="{{ route('user.transaction.gaveStore') }}" method="POST">
                             @csrf
                             <!-- Form -->
                             <div class="mb-4">
