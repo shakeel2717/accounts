@@ -320,20 +320,39 @@
                         </li>
 
                         <li class="nav-item ">
-                            <a class="js-nav-tooltip-link nav-link " href="{{ route('user.dashboard') }}" title="Layouts"
-                                data-placement="left">
+                            <a class="js-nav-tooltip-link nav-link " href="{{ route('user.dashboard') }}"
+                                title="Layouts" data-placement="left">
                                 <i class="tio-home-vs-1-outlined nav-icon"></i>
                                 <span
                                     class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">Dashboard</span>
                             </a>
                         </li>
 
+                        <li class="nav-item ">
+                            <a class="js-nav-tooltip-link nav-link " href="{{ route('user.customer.index') }}"
+                                title="Layouts" data-placement="left">
+                                <i class="tio-home-vs-1-outlined nav-icon"></i>
+                                <span
+                                    class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">Customers</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item ">
+                            <a class="js-nav-tooltip-link nav-link " href="{{ route('user.seller.index') }}"
+                                title="Layouts" data-placement="left">
+                                <i class="tio-home-vs-1-outlined nav-icon"></i>
+                                <span
+                                    class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">Seller</span>
+                            </a>
+                        </li>
+
 
 
                         <li class="nav-item ">
-                            <a class="js-nav-tooltip-link nav-link " href="#" title="Layouts"
-                                data-placement="left">
-                                <span class="navbar-vertical-aside-mini-mode-hidden-elements btn btn-outline btn-white"><i class="tio-wallet nav-icon"></i>New rental request</span>
+                            <a class="js-nav-tooltip-link nav-link " href="#" title="Layouts" data-placement="left">
+                                <span
+                                    class="navbar-vertical-aside-mini-mode-hidden-elements btn btn-outline btn-white"><i
+                                        class="tio-wallet nav-icon"></i>Generate Reports</span>
                             </a>
                         </li>
 
@@ -456,6 +475,7 @@
             Chart.plugins.unregister(ChartDataLabels);
             var start = moment();
             var end = moment();
+
             function cb(start, end) {
                 $('#js-daterangepicker-predefined .js-daterangepicker-predefined-preview').html(start.format(
                     'MMM D') + ' - ' + end.format('MMM D, YYYY'));
