@@ -3,13 +3,13 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h1 class="page-header-title">All Sellers</h1>
+                <h1 class="page-header-title">{{ $customer->name }}</h1>
             </div>
             <!-- End Col -->
 
             <div class="col-auto">
-                <a class="btn btn-primary" href="{{ route('user.seller.create') }}">
-                    <i class="bi-person-plus-fill me-1"></i> Add Seller
+                <a class="btn btn-primary" href="{{ route('user.customer.create') }}">
+                    <i class="bi-person-plus-fill me-1"></i> Add new Customer
                 </a>
             </div>
             <!-- End Col -->
@@ -22,7 +22,7 @@
                 <div class="card-header">
                     <div class="row justify-content-between align-items-center flex-grow-1">
                         <div class="col-md">
-                            <h4 class="card-header-title text-start">All Sellers</h4>
+                            <h4 class="card-header-title text-start">{{ $customer->name }}'s All Transactions</h4>
                         </div>
 
                         <div class="col-auto">
@@ -89,63 +89,58 @@
                     <table id="exportDatatable"
                         class="js-datatable table table-borderless table-thead-bordered table-nowrap table-align-middle card-table"
                         data-hs-datatables-options='{
-                                                              "dom": "Bfrtip",
-                                                              "buttons": [
-                                                                {
-                                                                  "extend": "copy",
-                                                                  "className": "d-none"
-                                                                },
-                                                                {
-                                                                  "extend": "excel",
-                                                                  "className": "d-none"
-                                                                },
-                                                                {
-                                                                  "extend": "csv",
-                                                                  "className": "d-none"
-                                                                },
-                                                                {
-                                                                  "extend": "pdf",
-                                                                  "className": "d-none"
-                                                                },
-                                                                {
-                                                                  "extend": "print",
-                                                                  "className": "d-none"
-                                                                }
-                                                             ],
-                                                             "order": [],
-                                       "search": "#datatableWithSearchInput",
-                                       "isResponsive": false,
-                                       "isShowPaging": false,
-                                       "pagination": "datatableWithSearchPagination"
-                                                             
-                                                           }'>
+                                                                              "dom": "Bfrtip",
+                                                                              "buttons": [
+                                                                                {
+                                                                                  "extend": "copy",
+                                                                                  "className": "d-none"
+                                                                                },
+                                                                                {
+                                                                                  "extend": "excel",
+                                                                                  "className": "d-none"
+                                                                                },
+                                                                                {
+                                                                                  "extend": "csv",
+                                                                                  "className": "d-none"
+                                                                                },
+                                                                                {
+                                                                                  "extend": "pdf",
+                                                                                  "className": "d-none"
+                                                                                },
+                                                                                {
+                                                                                  "extend": "print",
+                                                                                  "className": "d-none"
+                                                                                }
+                                                                             ],
+                                                                             "order": [],
+                                                       "search": "#datatableWithSearchInput",
+                                                       "isResponsive": false,
+                                                       "isShowPaging": false,
+                                                       "pagination": "datatableWithSearchPagination"
+                                                                             
+                                                                           }'>
                         <thead class="thead-light">
                             <tr>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Address</th>
-                                <th>Status</th>
+                                <th>Amount</th>
+                                <th>Detail</th>
+                                <th>Date</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            @foreach ($sellers as $customer)
+                            @foreach ($customer->transactions as $transaction)
                                 <tr>
                                     <td>
                                         <div class="ms-3">
-                                            <span class="d-block h5 text-inherit mb-0">{{ $customer->name }} </span>
                                             <span
-                                                class="d-block fs-5 text-body">{{ $customer->email ? $customer->email : 'No Email' }}</span>
+                                                class="d-block h5 text-inherit text-{{ ($transaction->sum == 'in') ? 'success' : 'danger' }} mb-0">{{ env('APP_CURRENCY') }}{{ ($transaction->sum == 'in') ? '+' : '-' }}{{ number_format($transaction->amount, 2) }}</span>
                                         </div>
                                     </td>
                                     <td>
                                         <span
-                                            class="d-block h5 mb-0">{{ $customer->phone ? $customer->phone : 'No Phone' }}</span>
+                                            class="d-block mb-0">{{ $transaction->description ? $transaction->description : 'No Description' }}</span>
                                     </td>
-                                    <td>{{ $customer->address ? $customer->address : 'No Address' }}</td>
-                                    <td>
-                                        <span class="legend-indicator bg-success"></span> {{ str($customer->status)->upper() }}
-                                    </td>
+                                    <td>{{ $transaction->created_at }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

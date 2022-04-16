@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
-use App\Models\user\Seller;
+use App\Models\user\Customer;
 use Illuminate\Http\Request;
 
-class SellerController extends Controller
+class SuppliersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class SellerController extends Controller
      */
     public function index()
     {
-        $sellers = Seller::get();
-        return view('user.dashboard.seller.index', compact('sellers'));
+        $customers = Customer::where('role','suppliers')->get();
+        return view('user.dashboard.customer.index', compact('customers'));
     }
 
     /**
@@ -26,7 +26,7 @@ class SellerController extends Controller
      */
     public function create()
     {
-        return view('user.dashboard.seller.create');
+        //
     }
 
     /**
@@ -37,24 +37,7 @@ class SellerController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'business_name' => 'nullable|max:255',
-            'address' => 'nullable|max:255',
-            'email' => 'nullable|max:255',
-            'phone' => 'nullable|max:255',
-        ]);
-
-        $seller = new Seller();
-        $seller->user_id = auth()->user()->id;
-        $seller->name = $validatedData['name'];
-        $seller->business_name = $validatedData['business_name'];
-        $seller->address = $validatedData['address'];
-        $seller->email = $validatedData['email'];
-        $seller->phone = $validatedData['phone'];
-        $seller->save();
-
-        return redirect()->back()->with('success', 'Seller created successfully');
+        //
     }
 
     /**

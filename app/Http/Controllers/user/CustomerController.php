@@ -15,7 +15,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::get();
+        $customers = Customer::where('role','customer')->get();
         return view('user.dashboard.customer.index', compact('customers'));
     }
 
@@ -65,7 +65,8 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+        $customer = Customer::find($id);
+        return view('user.dashboard.customer.show', compact('customer'));
     }
 
     /**

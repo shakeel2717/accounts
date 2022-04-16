@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('status')->default('active');
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
+            $table->string('role')->default('customer');
             $table->timestamps();
         });
     }

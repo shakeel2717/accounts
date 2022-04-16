@@ -122,6 +122,7 @@
                         <thead class="thead-light">
                             <tr>
                                 <th>Name</th>
+                                <th>Balance</th>
                                 <th>Phone</th>
                                 <th>Address</th>
                                 <th>Status</th>
@@ -133,11 +134,15 @@
                                 <tr>
                                     <td>
                                         <div class="ms-3">
-                                            <span class="d-block h5 text-inherit mb-0">{{ $customer->name }} </span>
+                                            <span class="d-block h5 text-inherit mb-0"><a href="{{ route('user.customer.show',['customer' => $customer->id]) }}">{{ $customer->name }}</a> </span>
                                             <span
                                                 class="d-block fs-5 text-body">{{ $customer->email ? $customer->email : 'No Email' }}</span>
                                         </div>
                                     </td>
+                                    <td>
+                                        <span class="h5">
+                                            {{ env('APP_CURRENCY') }}{{ Balance($customer->id) }}</td>
+                                        </span>
                                     <td>
                                         <span
                                             class="d-block h5 mb-0">{{ $customer->phone ? $customer->phone : 'No Phone' }}</span>
